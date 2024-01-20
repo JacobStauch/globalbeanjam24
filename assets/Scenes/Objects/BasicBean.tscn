@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkl4rv13g56fd"]
+
+[ext_resource type="Texture2D" uid="uid://bctiwirjqhr2u" path="res://assets/Graphics/bean_basic.png" id="1_ai70f"]
+
+[node name="BasicBean" type="Node2D"]
+
+[node name="BasicBeanSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_ai70f")

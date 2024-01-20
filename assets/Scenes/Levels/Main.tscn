@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://bavsce3cjvpi3"]
+[gd_scene load_steps=2 format=3 uid="uid://bavsce3cjvpi3"]
+
+[ext_resource type="PackedScene" uid="uid://dkl4rv13g56fd" path="res://assets/Scenes/Objects/BasicBean.tscn" id="1_uqucq"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="BasicBean" parent="." instance=ExtResource("1_uqucq")]
+position = Vector2(575, 303)
