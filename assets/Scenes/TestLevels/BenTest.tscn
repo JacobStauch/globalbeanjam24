@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b455xqkqh0640"]
+
+[ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="1_khqm6"]
+[ext_resource type="PackedScene" uid="uid://dkl4rv13g56fd" path="res://assets/Scenes/Objects/BasicBean.tscn" id="2_m3bgv"]
+
+[node name="BenTest" type="Node2D"]
+
+[node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers"]]
+script = ExtResource("1_khqm6")
+
+[node name="BasicBean" parent="." instance=ExtResource("2_m3bgv")]

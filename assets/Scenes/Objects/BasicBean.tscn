@@ -1,8 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkl4rv13g56fd"]
+[gd_scene load_steps=3 format=3 uid="uid://dkl4rv13g56fd"]
 
 [ext_resource type="Texture2D" uid="uid://bctiwirjqhr2u" path="res://assets/Graphics/bean_basic.png" id="1_ai70f"]
+[ext_resource type="Script" path="res://assets/Scripts/BeanMovementController.gd" id="2_6j223"]
 
 [node name="BasicBean" type="Node2D"]
 
 [node name="BasicBeanSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_ai70f")
+
+[node name="MovementControl" type="Node2D" parent="."]
+script = ExtResource("2_6j223")
+
+[node name="MovementTimer" type="Timer" parent="MovementControl"]
+autostart = true
+
+[connection signal="timeout" from="MovementControl/MovementTimer" to="MovementControl" method="_on_movement_timer_timeout"]
