@@ -1,0 +1,29 @@
+{
+	"start": [
+		{
+			"text": "hehehe, Welcome to my bean kingdom",
+			"emotion": "happy"
+			
+		},
+		{
+			"text": "I've spent years procuring as many beans as possible until I had a bean army",
+			"emotion": "angry"
+		},
+		{
+			"text": "I've bean bored recently though, let's have some fun together",
+			"emotion": "happy"
+		},
+		{
+			"text": "Wouldn't it be funny if you ate all of the beans that I've collected?",
+			"emotion": "laughing"
+		},
+		{
+			"text": "Maybe if you can type well enough, you can make it out of this alive",
+			"emotion": "happy"
+		},
+		{
+			"text": "It's bean fun chatting, ta-ta!",
+			"emotion": "happy"
+		}
+	]
+}

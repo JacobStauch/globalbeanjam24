@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://cia08ep4p0qos"]
+
+[ext_resource type="Script" path="res://assets/Scripts/DialogueBox.gd" id="1_5e2e5"]
+[ext_resource type="FontFile" uid="uid://dmhwtthyptvqi" path="res://assets/Fonts/Momcake-Bold.otf" id="1_extuc"]
+[ext_resource type="FontFile" uid="uid://bacru1d6lc3p4" path="res://assets/Fonts/Momcake-Thin.otf" id="2_e3a4d"]
+[ext_resource type="Texture2D" uid="uid://dy1vgo0jngx1v" path="res://assets/Graphics/beanking_happy.png" id="3_tya10"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ytet"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52o23"]
+bg_color = Color(0.956863, 0.87451, 0.796078, 1)
+
+[node name="SaladTest" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="DialogueBox" type="Panel" parent="."]
+offset_left = 136.0
+offset_top = 360.0
+offset_right = 1032.0
+offset_bottom = 624.0
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_7ytet")
+script = ExtResource("1_5e2e5")
+
+[node name="Name" type="RichTextLabel" parent="DialogueBox"]
+layout_mode = 0
+offset_left = 24.0
+offset_right = 400.0
+offset_bottom = 72.0
+theme_override_fonts/bold_font = ExtResource("1_extuc")
+theme_override_font_sizes/bold_font_size = 50
+bbcode_enabled = true
+text = "[color=black][b]King of Beans"
+
+[node name="Text" type="RichTextLabel" parent="DialogueBox"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 64.0
+offset_right = 792.0
+offset_bottom = 224.0
+theme_override_fonts/normal_font = ExtResource("2_e3a4d")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[color=black]some text"
+
+[node name="Timer" type="Timer" parent="DialogueBox"]
+
+[node name="Indicator" type="Polygon2D" parent="DialogueBox"]
+z_index = 1
+position = Vector2(95.0363, 74.6665)
+scale = Vector2(-1.68874e+07, -2.63654e+06)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-4.24466e-05, -5.43213e-05, -4.58766e-05, -5.43213e-05, -4.41616e-05, -6.56383e-05)
+
+[node name="Portrait" type="Sprite2D" parent="DialogueBox"]
+z_index = -2
+position = Vector2(424, -128)
+scale = Vector2(0.409434, 0.409434)
+texture = ExtResource("3_tya10")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -3
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_52o23")
