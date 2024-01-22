@@ -6,7 +6,8 @@
 script = ExtResource("1_4k6ch")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_right = 69.0
+offset_right = 122.0
 offset_bottom = 64.0
-text = "Test"
+bbcode_enabled = true
+text = "Test phrase!"
 scroll_active = false
