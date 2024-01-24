@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d426160v7y4k"]
+
+[ext_resource type="PackedScene" uid="uid://c6na8tdifue5y" path="res://assets/Scenes/Objects/GameManager.tscn" id="1_ihyht"]
+[ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="2_u3268"]
+[ext_resource type="PackedScene" uid="uid://dkl4rv13g56fd" path="res://assets/Scenes/Objects/BasicBean.tscn" id="3_ohb5t"]
+
+[node name="JacobTest" type="Node2D"]
+
+[node name="GameManager" parent="." instance=ExtResource("1_ihyht")]
+position = Vector2(174.293, 358.32)
+
+[node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers"]]
+script = ExtResource("2_u3268")
+
+[node name="BasicBean" parent="." instance=ExtResource("3_ohb5t")]

@@ -1,5 +1,7 @@
 extends Node2D
 
+signal promptDoneSignal
+
 @export var green = Color("#63f565")
 @export var red = Color("#a63537")
 
@@ -25,7 +27,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	promptLabel.parse_bbcode(centerString(promptText))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -60,6 +62,7 @@ func checkChar(letter: String):
 			setLabelCorrectCharsGreen()
 			if (promptArray.size() == 0):
 				isDone = true
+				promptDoneSignal.emit()
 				print("Prompt finished")
 			else:
 				curIndex += 1
@@ -67,20 +70,22 @@ func checkChar(letter: String):
 		else:
 			if (letter != ""):
 				setLabelNextCharRed()
-			
-		
 		
 func setLabelCorrectCharsGreen():
 	promptLabel.parse_bbcode(
-		colorChar(promptText.substr(0, curIndex+1), green) + 
-		promptText.substr(curIndex+1, promptText.length())
+		centerString(
+			colorChar(promptText.substr(0, curIndex+1), green) + 
+			promptText.substr(curIndex+1, promptText.length())
+		)
 	)
 	
 func setLabelNextCharRed():
 	promptLabel.parse_bbcode(
-		colorChar(promptText.substr(0, curIndex), green) + 
-		colorChar(promptText[curIndex], red) + 
-		promptText.substr(curIndex+1, promptText.length())
+		centerString(
+			colorChar(promptText.substr(0, curIndex), green) + 
+			colorChar(promptText[curIndex], red) + 
+			promptText.substr(curIndex+1, promptText.length())
+		)
 	)
 	
 func colorChar(chars: String, color: Color) -> String:
@@ -89,3 +94,6 @@ func colorChar(chars: String, color: Color) -> String:
 
 func resetLabelColors():
 	pass
+
+func centerString(stringIn: String):
+	return ("[center]" + stringIn + "[/center]")
