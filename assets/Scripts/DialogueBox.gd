@@ -3,6 +3,8 @@ extends Node
 @onready var dialoguePath = "res://assets/Text/dialogue.json"
 @onready var textSpeed = 0.05
 
+signal dialogue_finished
+
 var dialogue
 var phraseNum = 0
 var finished = false
@@ -27,6 +29,7 @@ func getDialogue() -> Array:
 func nextPhrase() -> void:
 	if phraseNum >= len(dialogue):
 		queue_free()
+		emit_signal("dialogue_finished")
 		return
 	finished = false
 	
@@ -36,7 +39,8 @@ func nextPhrase() -> void:
 	$Portrait.texture = load(img)
 	
 	$Text.visible_characters = 0
-	
+	$Indicator/AnimationPlayer.stop()
+	$Indicator.set_visible(false)
 	while $Text.visible_characters < len($Text.text):
 		$Text.visible_characters += 1
 		
@@ -44,6 +48,8 @@ func nextPhrase() -> void:
 		await $Timer.timeout
 	finished = true
 	phraseNum += 1
+	$Indicator.set_visible(true)
+	$Indicator/AnimationPlayer.play("IndicatorAnimation")
 	return
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

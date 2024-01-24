@@ -14,3 +14,9 @@ config/name="Global Bean Jam"
 run/main_scene="res://assets/Scenes/Levels/Main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="viewport"
