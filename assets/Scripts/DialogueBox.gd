@@ -8,6 +8,7 @@ signal dialogue_finished
 var dialogue
 var phraseNum = 0
 var finished = false
+#TODO: get currentState from game manager to show correct dialogue
 var currentState = "start"
 # Called when the node enters the scene tree for the first time.
 func _ready():

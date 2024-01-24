@@ -25,5 +25,41 @@
 			"text": "It's bean fun chatting, ta-ta!",
 			"emotion": "happy"
 		}
+	],
+	"ending_bad": [
+		{
+			"text": "Wow, this is pathetic. I really expected more from you.",
+			"emotion": "angry"
+		},
+		{
+			"text": "I guess the beans were a better investment after all.",
+			"emotion": "angry"
+		},
+		{
+			"text": "I really thought this would be more amusing.",
+			"emotion": "angry"
+		},
+		{
+			"text": "Maybe I can still have a laugh from you getting eaten by the beans, though",
+			"emotion": "laughing"
+		}
+	],
+	"ending_good": [
+		{
+			"text": "HAHAHAHAHAHAHA",
+			"emotion": "laughing"
+		},
+		{
+			"text": "Bravo, bravo! This was incredible!",
+			"emotion": "laughing"
+		},
+		{
+			"text": "This is the best thing I've seen in a long time. Thanks for the thoroughly amusing show!",
+			"emotion": "laughing"
+		},
+		{
+			"text": "I guess you're free to go now. Thanks for beaning such a good bean about the whole thing",
+			"emotion": "happy"
+		}
 	]
 }
