@@ -1,7 +1,16 @@
 {
-    "basicBean": {
-        "phrases": [
-             "Test Phrase"
-         ]
-    }
+	"basicBean": {
+		"phrases": [
+			 "Test Phrase"
+		 ]
+	},
+	"garbanzoBean": {
+		"phrases": [
+			"Baked beans with extra garlic and herbs",
+			"Garbanzo beans blended into hummus",
+			"Pinto beans slow-cooked to perfection",
+			"Political ads saturate the airwaves",
+			"Primary caucuses influence delegate counts"
+		]
+	}
 }
