@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg2k7w2qfueut"]
+
+[ext_resource type="Script" path="res://assets/Scripts/PauseMenu.gd" id="1_sme1v"]
+[ext_resource type="Theme" uid="uid://bwupqwo68knin" path="res://assets/UI/PauseMenuTheme.tres" id="2_85lyn"]
+[ext_resource type="FontFile" uid="uid://dlo0hs2msvoy8" path="res://assets/Fonts/Heyhoo.ttf" id="3_nlfts"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t3sbt"]
+font = ExtResource("3_nlfts")
+font_size = 72
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.439216)
+shadow_offset = Vector2(2, 3)
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sme1v")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 0)
+
+[node name="BackgroundPanel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(350, 350)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_85lyn")
+
+[node name="MainContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PausedLabel" type="Label" parent="CenterContainer/MainContainer"]
+layout_mode = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_t3sbt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CenterContainer/MainContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_85lyn")
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="CenterContainer/MainContainer/ButtonContainer"]
+layout_mode = 2
+theme = ExtResource("2_85lyn")
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/MainContainer/ButtonContainer"]
+layout_mode = 2
+theme = ExtResource("2_85lyn")
+text = "Quit"
+
+[connection signal="pressed" from="CenterContainer/MainContainer/ButtonContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MainContainer/ButtonContainer/QuitButton" to="." method="_on_quit_button_pressed"]
