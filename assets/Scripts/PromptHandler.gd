@@ -59,12 +59,14 @@ func convertPromptTextToArray(prompt: String):
 func checkChar(letter: String):
 	if (!isDone):
 		# Correct letter
+		print("check char")
 		if (letter == promptArray.front()):
 			promptArray.pop_front()
 			setLabelCorrectCharsGreen()
 			if (promptArray.size() == 0):
 				isDone = true
 				promptDoneSignal.emit()
+				print("here")
 				print("Prompt finished")
 			else:
 				curIndex += 1
@@ -100,6 +102,9 @@ func resetLabelColors():
 func centerString(stringIn: String):
 	return ("[center]" + stringIn + "[/center]")
 
-
 func _on_basic_bean_dialogue_finished():
 	canType = true
+	promptArray = convertPromptTextToArray(promptText)
+	print(promptArray.size())
+	print("can type")
+

@@ -13,6 +13,7 @@ func _ready():
 	timer.stop()
 
 func _on_movement_timer_timeout():
+	print("timer timeout")
 	if(canMove):
 		var next = path_manager.get_next_pos(i)
 		
@@ -25,5 +26,6 @@ func _on_movement_timer_timeout():
 
 
 func _on_basic_bean_dialogue_finished():
+	print("timer start")
 	canMove = true
 	timer.start()
