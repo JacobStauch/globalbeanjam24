@@ -6,6 +6,7 @@ extends Node2D
 func _ready():
 	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
 
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

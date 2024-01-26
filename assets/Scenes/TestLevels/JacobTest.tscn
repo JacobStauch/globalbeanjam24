@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://d426160v7y4k"]
+[gd_scene load_steps=4 format=3 uid="uid://dabj10x1hfia4"]
 
-[ext_resource type="PackedScene" uid="uid://c6na8tdifue5y" path="res://assets/Scenes/Objects/GameManager.tscn" id="1_ihyht"]
+[ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="1_ihyht"]
 [ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="2_u3268"]
 [ext_resource type="PackedScene" uid="uid://dkl4rv13g56fd" path="res://assets/Scenes/Objects/BasicBean.tscn" id="3_ohb5t"]
 

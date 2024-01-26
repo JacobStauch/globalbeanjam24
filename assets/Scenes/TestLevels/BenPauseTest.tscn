@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfsbauwvyfs1u"]
+[gd_scene load_steps=3 format=3 uid="uid://cy2xn4gx6ejob"]
 
-[ext_resource type="PackedScene" uid="uid://bg2k7w2qfueut" path="res://assets/Scenes/Objects/PauseMenu.tscn" id="2_xlu8y"]
+[ext_resource type="PackedScene" uid="uid://bju3ia3r8w6o" path="res://assets/Scenes/Objects/PauseMenu.tscn" id="2_xlu8y"]
 
 [sub_resource type="GDScript" id="GDScript_gg0vc"]
 script/source = "extends Node2D

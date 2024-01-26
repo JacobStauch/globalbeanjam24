@@ -11,6 +11,8 @@ signal promptDoneSignal
 @onready var curIndex: int = 0
 @onready var isDone: bool = false
 
+var canType = false
+
 # TODO:
 # 1. Handle typing one prompt (Done)
 # 2. Change letter color based on correct or incorrect typing (Done)
@@ -35,7 +37,7 @@ func _process(delta):
 	pass
 
 func _input(event):
-	if event is InputEventKey and event.is_pressed():
+	if canType and event is InputEventKey and event.is_pressed():
 		var letterTyped = OS.get_keycode_string(event.unicode)
 		print("Letter typed: ", letterTyped)
 		checkChar(letterTyped)
@@ -97,3 +99,7 @@ func resetLabelColors():
 
 func centerString(stringIn: String):
 	return ("[center]" + stringIn + "[/center]")
+
+
+func _on_basic_bean_dialogue_finished():
+	canType = true

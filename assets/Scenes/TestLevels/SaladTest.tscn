@@ -1,102 +1,34 @@
-[gd_scene load_steps=9 format=3 uid="uid://cia08ep4p0qos"]
+[gd_scene load_steps=7 format=3 uid="uid://cia08ep4p0qos"]
 
-[ext_resource type="Script" path="res://assets/Scripts/DialogueBox.gd" id="1_5e2e5"]
-[ext_resource type="FontFile" uid="uid://dmhwtthyptvqi" path="res://assets/Fonts/Momcake-Bold.otf" id="1_extuc"]
-[ext_resource type="FontFile" uid="uid://bacru1d6lc3p4" path="res://assets/Fonts/Momcake-Thin.otf" id="2_e3a4d"]
-[ext_resource type="Texture2D" uid="uid://dy1vgo0jngx1v" path="res://assets/Graphics/beanking_happy.png" id="3_tya10"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ytet"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52o23"]
-bg_color = Color(0.956863, 0.87451, 0.796078, 1)
-
-[sub_resource type="Animation" id="Animation_u8yg0"]
-resource_name = "IndicatorAnimation"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 1.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_85ikn"]
-_data = {
-"IndicatorAnimation": SubResource("Animation_u8yg0")
-}
+[ext_resource type="PackedScene" uid="uid://kayuqroo0hjl" path="res://assets/Scenes/Objects/DialogueBox.tscn" id="1_6g1pr"]
+[ext_resource type="PackedScene" uid="uid://gcip23akssvb" path="res://assets/Scenes/Objects/PromptHandler.tscn" id="1_eg478"]
+[ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="1_ogd56"]
+[ext_resource type="PackedScene" uid="uid://dkl4rv13g56fd" path="res://assets/Scenes/Objects/BasicBean.tscn" id="2_uorb2"]
+[ext_resource type="PackedScene" uid="uid://bju3ia3r8w6o" path="res://assets/Scenes/Objects/PauseMenu.tscn" id="5_g2o1u"]
+[ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="5_nj5dg"]
 
 [node name="SaladTest" type="Node2D"]
 metadata/_edit_lock_ = true
 
-[node name="DialogueBox" type="Panel" parent="."]
-offset_left = 224.0
-offset_top = 600.0
-offset_right = 1120.0
-offset_bottom = 864.0
-scale = Vector2(1.67302, 1.67302)
-size_flags_vertical = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_7ytet")
-script = ExtResource("1_5e2e5")
+[node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers"]]
+script = ExtResource("1_ogd56")
 
-[node name="Name" type="RichTextLabel" parent="DialogueBox"]
-layout_mode = 0
-offset_left = 24.0
-offset_right = 400.0
-offset_bottom = 72.0
-theme_override_fonts/bold_font = ExtResource("1_extuc")
-theme_override_font_sizes/bold_font_size = 50
-bbcode_enabled = true
-text = "[color=black][b]King of Beans"
+[node name="PromptHandler" parent="." instance=ExtResource("1_eg478")]
+position = Vector2(-680, 120)
 
-[node name="Text" type="RichTextLabel" parent="DialogueBox"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 64.0
-offset_right = 792.0
-offset_bottom = 224.0
-theme_override_fonts/normal_font = ExtResource("2_e3a4d")
-theme_override_font_sizes/normal_font_size = 40
-bbcode_enabled = true
-text = "[color=black]some text"
+[node name="BasicBean" parent="." instance=ExtResource("2_uorb2")]
+position = Vector2(456, 248)
+scale = Vector2(1.00939, 1.00939)
 
-[node name="Timer" type="Timer" parent="DialogueBox"]
+[node name="GameManager" parent="." instance=ExtResource("5_nj5dg")]
 
-[node name="Portrait" type="Sprite2D" parent="DialogueBox"]
-z_index = -2
-position = Vector2(424, -128)
-scale = Vector2(0.409434, 0.409434)
-texture = ExtResource("3_tya10")
+[node name="PauseMenu" parent="." instance=ExtResource("5_g2o1u")]
+visible = false
+offset_left = 920.0
+offset_top = 480.0
+offset_right = 920.0
+offset_bottom = 480.0
 
-[node name="Panel" type="Panel" parent="DialogueBox"]
-z_index = -3
-offset_left = -136.0
-offset_top = -360.0
-offset_right = 1016.0
-offset_bottom = 288.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_52o23")
+[node name="DialogueBox" parent="." instance=ExtResource("1_6g1pr")]
 
-[node name="Indicator" type="RichTextLabel" parent="DialogueBox"]
-layout_mode = 0
-offset_left = 875.0
-offset_top = 220.0
-offset_right = 907.0
-offset_bottom = 281.0
-rotation = 1.5708
-scale = Vector2(0.983692, 1)
-theme_override_fonts/normal_font = ExtResource("1_extuc")
-theme_override_font_sizes/normal_font_size = 55
-bbcode_enabled = true
-text = "[color=black]]"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="DialogueBox/Indicator"]
-libraries = {
-"": SubResource("AnimationLibrary_85ikn")
-}
+[connection signal="dialogue_box_finished" from="DialogueBox" to="BasicBean" method="_on_dialogue_box_dialogue_box_finished"]

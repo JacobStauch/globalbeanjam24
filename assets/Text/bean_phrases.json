@@ -1,7 +1,8 @@
 {
 	"basicBean": {
 		"phrases": [
-			 "Test Phrase"
+			"Test Phrase",
+			"There are many words to type here."
 		 ]
 	},
 	"garbanzoBean": {

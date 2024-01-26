@@ -4,6 +4,8 @@ extends Node2D
 @onready var promptHandler = $PromptHandler
 @onready var signalBus = get_node("/root/SignalBus")
 
+signal dialogue_finished
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	promptHandler.promptDoneSignal.connect(_on_prompt_done)
@@ -14,4 +16,6 @@ func _process(delta):
 
 func _on_prompt_done():
 	signalBus.beanPromptDoneSignal.emit(self)
-	
+
+func _on_dialogue_box_dialogue_box_finished():
+	emit_signal("dialogue_finished")
