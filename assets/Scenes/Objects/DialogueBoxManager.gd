@@ -1,9 +1,10 @@
 extends Node2D
 
-signal dialogue_box_finished
+@onready var signalBus = get_node("/root/SignalBus")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$DialogueBox.dialogue_finished.connect(_on_dialogue_box_dialogue_finished)
 	pass # Replace with function body.
 
 
@@ -13,4 +14,4 @@ func _process(delta):
 
 
 func _on_dialogue_box_dialogue_finished():
-	emit_signal("dialogue_box_finished")
+	signalBus.dialogueBoxFinishedSignal.emit()

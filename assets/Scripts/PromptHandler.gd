@@ -11,8 +11,6 @@ signal promptDoneSignal
 @onready var curIndex: int = 0
 @onready var isDone: bool = false
 
-var canType = false
-
 # TODO:
 # 1. Handle typing one prompt (Done)
 # 2. Change letter color based on correct or incorrect typing (Done)
@@ -37,7 +35,7 @@ func _process(delta):
 	pass
 
 func _input(event):
-	if canType and event is InputEventKey and event.is_pressed():
+	if event is InputEventKey and event.is_pressed():
 		var letterTyped = OS.get_keycode_string(event.unicode)
 		print("Letter typed: ", letterTyped)
 		checkChar(letterTyped)
@@ -59,14 +57,13 @@ func convertPromptTextToArray(prompt: String):
 func checkChar(letter: String):
 	if (!isDone):
 		# Correct letter
-		print("check char")
+		# print("check char")
 		if (letter == promptArray.front()):
 			promptArray.pop_front()
 			setLabelCorrectCharsGreen()
 			if (promptArray.size() == 0):
 				isDone = true
 				promptDoneSignal.emit()
-				print("here")
 				print("Prompt finished")
 			else:
 				curIndex += 1
@@ -93,7 +90,7 @@ func setLabelNextCharRed():
 	)
 	
 func colorChar(chars: String, color: Color) -> String:
-	print ("String to color: ", chars)
+	# print ("String to color: ", chars)
 	return "[color=" + color.to_html(false) + "]" + chars + "[/color]"
 
 func resetLabelColors():
@@ -101,10 +98,3 @@ func resetLabelColors():
 
 func centerString(stringIn: String):
 	return ("[center]" + stringIn + "[/center]")
-
-func _on_basic_bean_dialogue_finished():
-	canType = true
-	promptArray = convertPromptTextToArray(promptText)
-	print(promptArray.size())
-	print("can type")
-
