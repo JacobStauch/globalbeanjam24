@@ -12,18 +12,17 @@ signal promptDoneSignal
 @onready var isDone: bool = false
 
 # TODO:
-# 1. Handle typing one prompt (Done)
-# 2. Change letter color based on correct or incorrect typing (Done)
-# 3. Begin implementing flags so each prompt manager
+# Stretch goals if we want to have multiple beans on screen
+# 1. Begin implementing flags so each prompt manager
 # will know whether there are active queries (has a letter been matched in any prompt)
 # by listening to the game manager so letters typed in the middle of a prompt will
 # not trigger the first letter in another prompt to be considered as typed
-# 4. Add flag to only change incorrect letters to red if it is an active query
+# 2. Add flag to only change incorrect letters to red if it is an active query
 # so that every other prompt doesn't flash a red letter when typing the first letter
 # for the desired prompt
-# 5. Once a query in the active queries has been completed, the others should have
+# 3. Once a query in the active queries has been completed, the others should have
 # colors and progress reset
-# 6. Block repeated key-presses while key is pressed (wait until the key is released)
+# 4. Block repeated key-presses while key is pressed (wait until the key is released)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,14 +42,17 @@ func _input(event):
 func convertPromptTextToArray(prompt: String):
 	var promptArray: Array
 	for char in prompt:
-		if (char == " "):
-			promptArray.append("Space")
-		elif (char == "."):
-			promptArray.append("Period")
-		elif (char == "!"):
-			promptArray.append("Exclam")
-		else:
-			promptArray.append(char)
+		match char:
+			" ":
+				promptArray.append("Space")
+			".":
+				promptArray.append("Period")
+			"!":
+				promptArray.append("Exclam")
+			"-":
+				promptArray.append("Minus")
+			_:
+				promptArray.append(char)
 	print("Prompt array: ", promptArray)
 	return promptArray
 
