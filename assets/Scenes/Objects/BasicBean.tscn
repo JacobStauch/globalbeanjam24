@@ -17,6 +17,7 @@ script = ExtResource("2_6j223")
 
 [node name="MovementTimer" type="Timer" parent="MovementControl"]
 process_mode = 1
+wait_time = 10.0
 autostart = true
 
 [node name="PromptHandler" parent="." instance=ExtResource("3_ugu4j")]

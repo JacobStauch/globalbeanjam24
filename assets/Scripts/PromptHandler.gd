@@ -1,6 +1,7 @@
 extends Node2D
 
 signal promptDoneSignal
+signal beanSelected
 
 @export var green = Color("#63f565")
 @export var red = Color("#a63537")
@@ -10,6 +11,10 @@ signal promptDoneSignal
 @onready var promptArray: Array = convertPromptTextToArray(promptText)
 @onready var curIndex: int = 0
 @onready var isDone: bool = false
+@onready var signalBus = get_node("/root/SignalBus")
+
+var isSelected = false
+var anySelected = false
 
 # TODO:
 # Stretch goals if we want to have multiple beans on screen
@@ -27,6 +32,8 @@ signal promptDoneSignal
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	promptLabel.parse_bbcode(centerString(promptText))
+	signalBus.beanSelectedSignal.connect(_on_bean_selected)
+	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -57,10 +64,11 @@ func convertPromptTextToArray(prompt: String):
 	return promptArray
 
 func checkChar(letter: String):
-	if (!isDone):
+	if (!isDone and (isSelected or !anySelected)):
 		# Correct letter
 		# print("check char")
 		if (letter == promptArray.front()):
+			signalBus.beanSelectedSignal.emit(get_parent())
 			promptArray.pop_front()
 			setLabelCorrectCharsGreen()
 			if (promptArray.size() == 0):
@@ -100,3 +108,16 @@ func resetLabelColors():
 
 func centerString(stringIn: String):
 	return ("[center]" + stringIn + "[/center]")
+	
+func _on_bean_selected(beanInstance):
+	print("here")
+	print("bean selected: ", beanInstance.get_name())
+	print("current parent: ", get_parent().get_name())
+	if beanInstance.get_name() == get_parent().get_name():
+		isSelected = true
+		print("selected")
+	anySelected = true
+
+func _on_bean_prompt_done(beanInstance):
+	isSelected = false
+	anySelected = false

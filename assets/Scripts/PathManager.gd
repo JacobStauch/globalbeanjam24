@@ -28,5 +28,5 @@ func get_next_pos(idx: int):
 	var pos = level_data[current_level][idx + 1]
 	return _convertToTransform2D(pos["x"], pos["y"], pos["scale"])
 
-func get_random_path():
-	return level_data[current_level]
+func get_random_path(s: String):
+	return level_data[s]

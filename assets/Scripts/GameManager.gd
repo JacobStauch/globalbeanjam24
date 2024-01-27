@@ -16,7 +16,7 @@ extends Node2D
 signal new_bean_created
 
 var beansKilled = 0
-
+var maxBeanCount = 3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Seed RNG
@@ -32,7 +32,8 @@ func _process(delta):
 
 func _on_dialogue_box_finished():
 	print("Game Manager acknowledges dialogue box finished")
-	createBean(curLevel)
+	for i in maxBeanCount:
+		createBean(curLevel, i)
 
 func _on_bean_prompt_done(beanInstance):
 	print("Prompt done signal received")
@@ -41,10 +42,10 @@ func _on_bean_prompt_done(beanInstance):
 	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
+	if beansKilled >= maxBeanCount:
+		createBean(curLevel, 1)
 
-	createBean(curLevel)
-
-func createBean(level: String):
+func createBean(level: String, beanCount: int):
 	var numBeanTypesInLevel = beanLevelJson[level].size()-1
 	var randomBeanTypeFromLevel = beanLevelJson[level][randi_range(0,numBeanTypesInLevel)]
 	
@@ -61,7 +62,7 @@ func createBean(level: String):
 	beanPromptLabel.text = randomBeanPhrase
 	
 	var beanMovementScript = beanObject.get_node("MovementControl")
-	beanMovementScript.set_path(path_manager.get_random_path())
+	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(beanCount)))
 	
 	add_child(beanObject)
 	emit_signal("new_bean_created")

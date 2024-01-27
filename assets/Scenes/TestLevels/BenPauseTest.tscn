@@ -34,6 +34,3 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-
-[connection signal="quit" from="Control" to="." method="_on_control_quit"]
-[connection signal="resume" from="Control" to="." method="_on_control_resume"]
