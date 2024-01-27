@@ -8,12 +8,14 @@ extends Node2D
 @onready var beanLevelJson: Dictionary = JSON.parse_string(beanLevelJsonFile.get_as_text())
 @onready var beanPhraseJson: Dictionary = JSON.parse_string(beanPhraseJsonFile.get_as_text())
 @onready var beanSpriteJson: Dictionary = JSON.parse_string(beanSpriteJsonFile.get_as_text())
+@onready var healthHUD = $HealthBeans
 
 @onready var curLevel = "kingdom"
 
 signal new_bean_created
 
 var beansKilled = 0
+var health = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -59,3 +61,7 @@ func createBean(level: String):
 	
 	add_child(beanObject)
 	emit_signal("new_bean_created")
+
+func on_hit():
+	health = health - 1
+	healthHUD.update_health(health)
