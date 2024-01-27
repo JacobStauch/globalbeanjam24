@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://rhf8cp412wby"]
+[gd_scene load_steps=8 format=3 uid="uid://rhf8cp412wby"]
 
 [ext_resource type="Script" path="res://assets/Scripts/Menu.gd" id="1_jm8o4"]
 [ext_resource type="FontFile" uid="uid://cgssqwfr30ip2" path="res://assets/Fonts/Duckname.ttf" id="2_511yp"]
 [ext_resource type="Texture2D" uid="uid://sgf58l0e8mjr" path="res://assets/Graphics/KingdomBackground.png" id="3_dm6u1"]
+[ext_resource type="FontFile" uid="uid://dlo0hs2msvoy8" path="res://assets/Fonts/Heyhoo.ttf" id="4_to55l"]
+[ext_resource type="Texture2D" uid="uid://t1jndj55thug" path="res://assets/Graphics/bean.png" id="5_k4s2i"]
+[ext_resource type="Texture2D" uid="uid://0cpr0fe0r4b0" path="res://assets/Graphics/blackeyedpea.png" id="6_yjk81"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0q86d"]
 texture = ExtResource("3_dm6u1")
@@ -46,6 +49,26 @@ z_index = -3
 offset_right = 1934.0
 offset_bottom = 1088.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_0q86d")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 424.0
+offset_top = 48.0
+offset_right = 1824.0
+offset_bottom = 440.0
+theme_override_fonts/normal_font = ExtResource("4_to55l")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "[color=brown]Typing of the Beans"
+
+[node name="Bean" type="Sprite2D" parent="."]
+position = Vector2(1856, 752)
+scale = Vector2(0.171642, 0.171642)
+texture = ExtResource("5_k4s2i")
+
+[node name="Blackeyedpea" type="Sprite2D" parent="."]
+position = Vector2(216, 352)
+scale = Vector2(0.11194, 0.11194)
+texture = ExtResource("6_yjk81")
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
