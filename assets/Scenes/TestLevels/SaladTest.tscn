@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://cia08ep4p0qos"]
 
-[ext_resource type="PackedScene" uid="uid://kayuqroo0hjl" path="res://assets/Scenes/Objects/DialogueBox.tscn" id="1_6g1pr"]
 [ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="1_ogd56"]
 [ext_resource type="Texture2D" uid="uid://sgf58l0e8mjr" path="res://assets/Graphics/KingdomBackground.png" id="5_8ay31"]
 [ext_resource type="PackedScene" uid="uid://bju3ia3r8w6o" path="res://assets/Scenes/Objects/PauseMenu.tscn" id="5_g2o1u"]
 [ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="5_nj5dg"]
+[ext_resource type="PackedScene" uid="uid://deae7rohl6cai" path="res://assets/Scenes/Objects/EndMenu.tscn" id="6_bnlr7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lwnts"]
 texture = ExtResource("5_8ay31")
@@ -16,8 +16,6 @@ metadata/_edit_lock_ = true
 
 [node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers", "PathManagers"]]
 script = ExtResource("1_ogd56")
-
-[node name="DialogueBox" parent="." instance=ExtResource("1_6g1pr")]
 
 [node name="Background" type="Panel" parent="."]
 z_index = -3
@@ -31,6 +29,9 @@ offset_left = 920.0
 offset_top = 480.0
 offset_right = 920.0
 offset_bottom = 480.0
+
+[node name="EndMenu" parent="." instance=ExtResource("6_bnlr7")]
+visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true

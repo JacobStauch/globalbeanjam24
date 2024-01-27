@@ -13,5 +13,5 @@ func _process(delta):
 	pass
 
 
-func _on_dialogue_box_dialogue_finished():
-	signalBus.dialogueBoxFinishedSignal.emit()
+func _on_dialogue_box_dialogue_finished(currentState):
+	signalBus.dialogueBoxFinishedSignal.emit(currentState)

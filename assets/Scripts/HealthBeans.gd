@@ -11,5 +11,5 @@ func update_health(value):
 		get_child(i).visible = value > i
 		set_size(Vector2(size.x - 60, size.y))
 		
-func _on_dialogue_box_finished():
+func _on_dialogue_box_finished(currentState):
 	show()
