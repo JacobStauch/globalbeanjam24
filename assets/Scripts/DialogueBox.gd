@@ -31,7 +31,7 @@ func getDialogue() -> Array:
 func nextPhrase() -> void:
 	if phraseNum >= len(dialogue):
 		queue_free()
-		emit_signal("dialogue_finished")
+		dialogue_finished.emit(currentState)
 		return
 	finished = false
 	

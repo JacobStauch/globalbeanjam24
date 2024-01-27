@@ -72,8 +72,9 @@ func _process(delta):
 		if (levelStopwatch > curLevelDuration):
 			finishCurLevel()
 
-func _on_dialogue_box_finished():
+func _on_dialogue_box_finished(currentState):
 	print("Game Manager acknowledges dialogue box finished")
+	print("Dialogue state finished: ", currentState)
 	startCurLevel()
 
 func _on_bean_prompt_done(beanInstance):
