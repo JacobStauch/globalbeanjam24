@@ -4,7 +4,7 @@ extends Node2D
 @onready var promptHandler = $PromptHandler
 @onready var movementController = $MovementControl
 @onready var signalBus = get_node("/root/SignalBus")
-@onready var camera = %Camera2D
+@onready var camera = get_viewport().get_camera_2d()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,9 +18,9 @@ func _process(delta):
 
 func _on_prompt_done():
 	# Bubble up the prompt Done signal with the Bean node that triggered it
+	var cameraPosition = camera.get_screen_center_position()
 	signalBus.beanPromptDoneSignal.emit(self)
 	var tween = get_tree().create_tween().set_parallel(true)
-	var cameraPosition = camera.get_screen_center_position()
 	var direction = 2000
 	if (position.x < cameraPosition.x):
 		direction = direction * -1

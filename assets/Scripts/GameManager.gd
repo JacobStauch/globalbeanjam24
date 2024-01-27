@@ -42,6 +42,7 @@ var beansKilled = 0
 var maxBeanCount = 1
 var health = 3
 var freePaths = [0,1,2] 
+var totalTimeInSeconds = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -144,6 +145,8 @@ func startCurLevel():
 func finishCurLevel():
 	despawnAllBeans()
 	curLevelIndex += 1
+	totalTimeInSeconds += levelStopwatch
+	print("total time: ", totalTimeInSeconds)
 	refreshCurLevelVars()
 	levelInProgress = false
 	# immediately start next level for testing purposes
