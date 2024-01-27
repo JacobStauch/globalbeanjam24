@@ -32,3 +32,7 @@ offset_bottom = 480.0
 
 [node name="EndMenu" parent="." instance=ExtResource("6_bnlr7")]
 visible = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+anchor_mode = 0
