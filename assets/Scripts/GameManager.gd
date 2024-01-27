@@ -5,9 +5,11 @@ extends Node2D
 @onready var beanLevelJsonFile = FileAccess.open("res://assets/Text/level_beans.json", FileAccess.READ)
 @onready var beanPhraseJsonFile = FileAccess.open("res://assets/Text/bean_phrases.json", FileAccess.READ)
 @onready var beanSpriteJsonFile = FileAccess.open("res://assets/Text/bean_sprites.json", FileAccess.READ)
+@onready var beanSpeedJsonFile = FileAccess.open("res://assets/Text/bean_speeds.json", FileAccess.READ)
 @onready var beanLevelJson: Dictionary = JSON.parse_string(beanLevelJsonFile.get_as_text())
 @onready var beanPhraseJson: Dictionary = JSON.parse_string(beanPhraseJsonFile.get_as_text())
 @onready var beanSpriteJson: Dictionary = JSON.parse_string(beanSpriteJsonFile.get_as_text())
+@onready var beanSpeedJson: Dictionary = JSON.parse_string(beanSpeedJsonFile.get_as_text())
 @onready var healthHUD = $HealthBeans
 
 @onready var levels = ["kingdom", "castle", "chamber"]
@@ -89,6 +91,9 @@ func createBean(level: String):
 	var beanMovementScript = beanObject.get_node("MovementControl")
 	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randi_range(0,2))))
 	
+	var beanMovementTimer = beanMovementScript.get_node("MovementTimer") as Timer
+	beanMovementTimer.wait_time = getRandomTime(randomBeanTypeFromLevel)
+	
 	$BeanContainer.add_child(beanObject)
 	emit_signal("new_bean_created")
 	
@@ -113,3 +118,7 @@ func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
 	curLevelDuration = levelDurations[curLevelIndex]
 	levelStopwatch = 0.0
+
+func getRandomTime(beanType):
+	var beanTimes = beanSpeedJson[beanType]
+	return randf_range(beanTimes["min"], beanTimes["max"])
