@@ -36,6 +36,9 @@ func _ready():
 	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
 	signalBus.dialogueBoxFinishedSignal.connect(_on_dialogue_box_finished)
 	signalBus.beanAtEndSignal.connect(_on_hit)
+	signalBus.path0LockedSignal.connect(_on_path_0_locked)
+	signalBus.path1LockedSignal.connect(_on_path_1_locked)
+	signalBus.path2LockedSignal.connect(_on_path_2_locked)
 	# Create BeanContainer child node to hold all the Bean objects
 	var beanContainerNode = Node2D.new()
 	beanContainerNode.name = "BeanContainer"
@@ -87,7 +90,8 @@ func createBean(level: String):
 	beanPromptLabel.text = randomBeanPhrase
 	
 	var beanMovementScript = beanObject.get_node("MovementControl")
-	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randi_range(0,2))))
+	var randomPath = randi_range(0,2)
+	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randomPath)), randomPath)
 	
 	$BeanContainer.add_child(beanObject)
 	emit_signal("new_bean_created")
@@ -113,3 +117,12 @@ func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
 	curLevelDuration = levelDurations[curLevelIndex]
 	levelStopwatch = 0.0
+
+func _on_path_0_locked(beanInstance):
+	print("path 0 locked")
+	
+func _on_path_1_locked(beanInstance):
+	print("path 1 locked")
+	
+func _on_path_2_locked(beanInstance):
+	print("path 2 locked")

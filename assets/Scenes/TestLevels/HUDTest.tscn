@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cyph8owlvlk6g"]
 
-[ext_resource type="PackedScene" uid="uid://dcn1fv4pwd34e" path="res://assets/Scenes/Objects/HealthBeans.tscn" id="1_10h8s"]
+[ext_resource type="PackedScene" path="res://assets/Scenes/Objects/HealthBeans.tscn" id="1_10h8s"]
 [ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="1_mb0bp"]
 [ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="3_esxpn"]
 [ext_resource type="PackedScene" uid="uid://kayuqroo0hjl" path="res://assets/Scenes/Objects/DialogueBox.tscn" id="4_iv7n6"]
