@@ -19,11 +19,11 @@
 		"Crispy green beans in the air fryer are delicious",
 		"Green beans don't go on pizza",
 	],
-	"navyBeans": {
+	"navyBeans": [
 		"Navy beans with ham",
 		"I honestly can't think of another use for navy beans besides serving it with ham"
-	},
-	"3dBean": {
+	],
+	"3dBean": [
 		"The Metaverse was a horrible failure"
-	}
+	]
 }
