@@ -38,3 +38,5 @@ offset_left = 84.0
 offset_top = 839.0
 offset_right = 474.0
 offset_bottom = 1019.0
+
+[connection signal="new_bean_created" from="GameManager" to="GameManager" method="_on_new_bean_created"]

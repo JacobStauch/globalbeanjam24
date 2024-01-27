@@ -24,3 +24,6 @@ func _on_bean_selected():
 
 func _on_timeout():
 	signalBus.beanAtEndSignal.emit(self)
+
+func get_bean_path_num():
+	return movementController.get_path_number()

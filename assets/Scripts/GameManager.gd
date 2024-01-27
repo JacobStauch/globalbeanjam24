@@ -27,6 +27,7 @@ signal new_bean_created
 var beansKilled = 0
 var maxBeanCount = 3
 var health = 3
+var freePaths = [0,1,2] 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,9 +37,7 @@ func _ready():
 	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
 	signalBus.dialogueBoxFinishedSignal.connect(_on_dialogue_box_finished)
 	signalBus.beanAtEndSignal.connect(_on_hit)
-	signalBus.path0LockedSignal.connect(_on_path_0_locked)
-	signalBus.path1LockedSignal.connect(_on_path_1_locked)
-	signalBus.path2LockedSignal.connect(_on_path_2_locked)
+	signalBus.beanCreatedSignal.connect(_on_bean_created_signal)
 	# Create BeanContainer child node to hold all the Bean objects
 	var beanContainerNode = Node2D.new()
 	beanContainerNode.name = "BeanContainer"
@@ -61,17 +60,20 @@ func _on_bean_prompt_done(beanInstance):
 	print("Prompt done signal received")
 	print("Found Node from signal: ", beanInstance.get_name())
 	print("Deleting bean")
+	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
-	
-	createBean(curLevel)
+	if freePaths.size() > 0:
+		createBean(curLevel)
 
 func _on_hit(beanInstance):
 	health = health - 1
 	healthHUD.update_health(health)
+	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	beanInstance.queue_free()
-	createBean(curLevel)
+	if freePaths.size() > 0: #create bean if there is a free path
+		createBean(curLevel)
 
 func createBean(level: String):
 	var numBeanTypesInLevel = beanLevelJson[level].size()-1
@@ -90,11 +92,13 @@ func createBean(level: String):
 	beanPromptLabel.text = randomBeanPhrase
 	
 	var beanMovementScript = beanObject.get_node("MovementControl")
-	var randomPath = randi_range(0,2)
+	var randomPathIndex = randi_range(0,freePaths.size())
+	var randomPath = freePaths[randomPathIndex]
 	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randomPath)), randomPath)
 	
 	$BeanContainer.add_child(beanObject)
 	emit_signal("new_bean_created")
+	SignalBus.beanCreatedSignal.emit(beanObject)
 	
 func despawnAllBeans():
 	for c in $BeanContainer.get_children():
@@ -117,12 +121,22 @@ func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
 	curLevelDuration = levelDurations[curLevelIndex]
 	levelStopwatch = 0.0
+	freePaths = [0,1,2]
+	print("paths reset")
 
-func _on_path_0_locked(beanInstance):
-	print("path 0 locked")
-	
-func _on_path_1_locked(beanInstance):
-	print("path 1 locked")
-	
-func _on_path_2_locked(beanInstance):
-	print("path 2 locked")
+func switch_path_locked(beanPath, destroyed):
+	print("beanPath: ", beanPath)
+	print("freePaths1: ", freePaths)
+	for i in freePaths.size():
+		if freePaths[i] == beanPath:
+			print("here")
+			freePaths.remove_at(i)
+			break
+	if destroyed:
+		freePaths.append(beanPath)
+	print("freePaths2: ", freePaths)
+
+func _on_bean_created_signal(beanInstance):
+	var beanPathNum = beanInstance.get_bean_path_num()
+	switch_path_locked(beanPathNum, false)
+	print("bean path: ", beanPathNum)
