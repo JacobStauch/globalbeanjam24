@@ -9,8 +9,6 @@ var canMove = false
 
 var path: Array = [{"x": 0.0, "y": 0.0, "scale": 1.0}] # Default
 
-signal at_end
-
 func _ready():
 	root.transform = get_transform_from_point_idx(0)
 
@@ -19,7 +17,7 @@ func _on_movement_timer_timeout():
 	i = i + 1
 	if i >= len(path):
 		timer.stop()
-		at_end.emit()
+		signalBus.beanAtEndSignal.emit()
 		return
 	
 	var next = path[i]

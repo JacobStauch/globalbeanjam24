@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyph8owlvlk6g"]
+
+[ext_resource type="PackedScene" uid="uid://dcn1fv4pwd34e" path="res://assets/Scenes/Objects/HealthBeans.tscn" id="1_10h8s"]
+[ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="1_mb0bp"]
+[ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="3_esxpn"]
+[ext_resource type="PackedScene" uid="uid://kayuqroo0hjl" path="res://assets/Scenes/Objects/DialogueBox.tscn" id="4_iv7n6"]
+[ext_resource type="Texture2D" uid="uid://sgf58l0e8mjr" path="res://assets/Graphics/KingdomBackground.png" id="5_ri7bb"]
+[ext_resource type="PackedScene" uid="uid://bju3ia3r8w6o" path="res://assets/Scenes/Objects/PauseMenu.tscn" id="6_4xnyh"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6yuuv"]
+texture = ExtResource("5_ri7bb")
+
+[node name="UiTest" type="Node2D"]
+
+[node name="DialogueBox" parent="." instance=ExtResource("4_iv7n6")]
+
+[node name="Background" type="Panel" parent="."]
+z_index = -3
+offset_right = 1934.0
+offset_bottom = 1088.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_6yuuv")
+
+[node name="PauseMenu" parent="." instance=ExtResource("6_4xnyh")]
+visible = false
+offset_left = 920.0
+offset_top = 480.0
+offset_right = 920.0
+offset_bottom = 480.0
+
+[node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers", "PathManagers"]]
+script = ExtResource("3_esxpn")
+
+[node name="GameManager" parent="." instance=ExtResource("1_mb0bp")]
+
+[node name="HealthBeans" parent="GameManager" instance=ExtResource("1_10h8s")]
+visible = false
+z_index = 1
+offset_left = 84.0
+offset_top = 839.0
+offset_right = 474.0
+offset_bottom = 1019.0

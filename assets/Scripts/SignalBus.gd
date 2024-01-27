@@ -3,6 +3,7 @@ extends Node
 signal beanPromptDoneSignal
 signal dialogueBoxFinishedSignal
 signal beanSelectedSignal
+signal beanAtEndSignal
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
