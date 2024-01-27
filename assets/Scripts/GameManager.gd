@@ -6,7 +6,6 @@ extends Node2D
 @onready var beanObjectScene: PackedScene = preload("res://assets/Scenes/Objects/BasicBean.tscn")
 @onready var beanHudScene: PackedScene = preload("res://assets/Scenes/Objects/HealthBeans.tscn")
 @onready var beanDialogueBoxScene: PackedScene = preload("res://assets/Scenes/Objects/DialogueBox.tscn")
-@onready var camera = get_viewport().get_camera_2d()
 
 #Preload JSON files
 @onready var beanLevelJsonFile = FileAccess.open("res://assets/Text/level_beans.json", FileAccess.READ)
@@ -36,6 +35,9 @@ extends Node2D
 
 # Get reference to PathManager node
 @onready var path_manager = get_tree().get_first_node_in_group("PathManagers")
+
+# Get reference to Camera node
+@onready var camera = get_viewport().get_camera_2d()
 
 # Create Game Manager signals
 signal new_bean_created
