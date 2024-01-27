@@ -13,13 +13,11 @@ func _ready():
 func _process(delta):
 	pass
 
-
 func _on_start_button_pressed():
 	get_tree().change_scene_to_file("res://assets/Scenes/TestLevels/SaladTest.tscn")
 
 func _on_quit_button_pressed():
 	get_tree().quit()
-
 
 func _on_menu_button_pressed():
 	get_tree().change_scene_to_file("res://assets/Scenes/Objects/MainMenu.tscn")

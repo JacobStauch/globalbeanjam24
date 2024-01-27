@@ -5,6 +5,7 @@ extends Node2D
 #Preload Object scenes
 @onready var beanObjectScene: PackedScene = preload("res://assets/Scenes/Objects/BasicBean.tscn")
 @onready var beanHudScene: PackedScene = preload("res://assets/Scenes/Objects/HealthBeans.tscn")
+@onready var endMenuScene: PackedScene = preload("res://assets/Scenes/Objects/EndMenu.tscn")
 #Preload JSON files
 @onready var beanLevelJsonFile = FileAccess.open("res://assets/Text/level_beans.json", FileAccess.READ)
 @onready var beanPhraseJsonFile = FileAccess.open("res://assets/Text/bean_phrases.json", FileAccess.READ)
@@ -43,6 +44,8 @@ var maxBeanCount = 1
 var health = 3
 var freePaths = [0,1,2] 
 var totalTimeInSeconds = 0.0
+var totalCharsTyped = 0
+var totalErrorsTyped = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -82,6 +85,7 @@ func _on_bean_prompt_done(beanInstance):
 	print("Found Node from signal: ", beanInstance.get_name())
 	print("Deleting bean")
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
+	updateCharsTyped(beanInstance)
 	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
@@ -94,11 +98,19 @@ func _on_hit(beanInstance):
 	health = health - 1
 	healthHUD.update_health(health)
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
+	updateCharsTyped(beanInstance)
 	beanInstance.queue_free()
 	var randomBeanCount = randi_range(1,maxBeanCount)
 	for i in randomBeanCount:
 		if freePaths.size() > 0: #create bean if there is a free path
 			createBean(curLevel)
+
+func updateCharsTyped(beanInstance):
+	var promptHandler = beanInstance.get_node("PromptHandler")
+	var charsTyped = promptHandler.getCharsTyped()
+	var errorsTyped = promptHandler.getErrorsTyped()
+	totalCharsTyped += charsTyped
+	totalErrorsTyped += errorsTyped
 
 func createBean(level: String):
 	var numBeanTypesInLevel = beanLevelJson[level].size()-1
@@ -147,10 +159,21 @@ func finishCurLevel():
 	curLevelIndex += 1
 	totalTimeInSeconds += levelStopwatch
 	print("total time: ", totalTimeInSeconds)
-	refreshCurLevelVars()
+	print("total chars typed: ", totalCharsTyped)
+	print("total errors typed: ", totalErrorsTyped)
 	levelInProgress = false
 	# immediately start next level for testing purposes
-	startCurLevel()
+	if curLevelIndex < 3:
+		refreshCurLevelVars()
+		startCurLevel()
+	else:
+		get_tree().paused = true
+		var endMenu = endMenuScene.instantiate()
+		var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
+		var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
+		panel.setWPM(wpm)
+		panel.setBeansEaten(beansKilled)
+		add_sibling(endMenu)
 	
 func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
