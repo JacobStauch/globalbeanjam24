@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://rhf8cp412wby"]
+
+[ext_resource type="Script" path="res://assets/Scripts/Menu.gd" id="1_jm8o4"]
+[ext_resource type="FontFile" uid="uid://cgssqwfr30ip2" path="res://assets/Fonts/Duckname.ttf" id="2_511yp"]
+[ext_resource type="Texture2D" uid="uid://sgf58l0e8mjr" path="res://assets/Graphics/KingdomBackground.png" id="3_dm6u1"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0q86d"]
+texture = ExtResource("3_dm6u1")
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_jm8o4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = 816.0
+offset_right = 480.0
+offset_bottom = 1061.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_511yp")
+theme_override_font_sizes/font_size = 100
+text = "Start"
+flat = true
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_511yp")
+theme_override_font_sizes/font_size = 100
+text = "Quit"
+flat = true
+
+[node name="Background" type="Panel" parent="."]
+z_index = -3
+offset_right = 1934.0
+offset_bottom = 1088.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_0q86d")
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

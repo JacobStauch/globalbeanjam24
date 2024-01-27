@@ -38,6 +38,7 @@ func _on_bean_prompt_done(beanInstance):
 	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
+
 	createBean(curLevel)
 
 func createBean(level: String):
