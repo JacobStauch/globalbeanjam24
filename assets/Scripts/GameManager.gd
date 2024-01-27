@@ -1,31 +1,43 @@
 extends Node2D
 
+#Get Signal Bus node
 @onready var signalBus = get_node("/root/SignalBus")
+#Preload Object scenes
 @onready var beanObjectScene: PackedScene = preload("res://assets/Scenes/Objects/BasicBean.tscn")
+@onready var beanHudScene: PackedScene = preload("res://assets/Scenes/Objects/HealthBeans.tscn")
+#Preload JSON files
 @onready var beanLevelJsonFile = FileAccess.open("res://assets/Text/level_beans.json", FileAccess.READ)
 @onready var beanPhraseJsonFile = FileAccess.open("res://assets/Text/bean_phrases.json", FileAccess.READ)
 @onready var beanSpriteJsonFile = FileAccess.open("res://assets/Text/bean_sprites.json", FileAccess.READ)
 @onready var beanSpeedJsonFile = FileAccess.open("res://assets/Text/bean_speeds.json", FileAccess.READ)
+# Create parsed JSON vars
 @onready var beanLevelJson: Dictionary = JSON.parse_string(beanLevelJsonFile.get_as_text())
 @onready var beanPhraseJson: Dictionary = JSON.parse_string(beanPhraseJsonFile.get_as_text())
 @onready var beanSpriteJson: Dictionary = JSON.parse_string(beanSpriteJsonFile.get_as_text())
 @onready var beanSpeedJson: Dictionary = JSON.parse_string(beanSpeedJsonFile.get_as_text())
-@onready var healthHUD = $HealthBeans
 
+# Initialize HUD reference
+@onready var healthHUD
+# Create Level Progression vars
 @onready var levels = ["kingdom", "castle", "chamber"]
 @onready var curLevelIndex = 0
 @onready var curLevel = levels[curLevelIndex]
 
+#Create level timer vars
 @onready var levelDurations = [10, 20, 30]
 @onready var curLevelDuration = 0
 @onready var levelStopwatch := 0.0
 
+# Create level flags
 @onready var levelInProgress: bool = false
 
+# Get reference to PathManager node
 @onready var path_manager = get_tree().get_first_node_in_group("PathManagers")
 
+# Create Game Manager signals
 signal new_bean_created
 
+# Create stat tracking vars
 var beansKilled = 0
 var maxBeanCount = 1
 var health = 3
@@ -44,6 +56,12 @@ func _ready():
 	var beanContainerNode = Node2D.new()
 	beanContainerNode.name = "BeanContainer"
 	self.add_child(beanContainerNode)
+	# Create player health HUD
+	var healthHudNode = beanHudScene.instantiate()
+	healthHudNode.name = "HealthBeans"
+	healthHudNode.hide()
+	self.add_child(healthHudNode)
+	healthHUD = $HealthBeans
 	
 	path_manager.current_level = curLevel
 	
