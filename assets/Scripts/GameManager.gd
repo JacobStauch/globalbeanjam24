@@ -26,6 +26,7 @@ func _ready():
 	# Connect signals
 	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
 	signalBus.dialogueBoxFinishedSignal.connect(_on_dialogue_box_finished)
+	signalBus.beanAtEndSignal.connect(_on_hit)
 	path_manager.current_level = curLevel
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -68,6 +69,6 @@ func createBean(level: String):
 	add_child(beanObject)
 	emit_signal("new_bean_created")
 
-func on_hit():
+func _on_hit():
 	health = health - 1
 	healthHUD.update_health(health)

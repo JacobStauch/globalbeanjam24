@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cxryghj5017d1" path="res://assets/UI/bean_green.png" id="4_rptmp"]
 
 [node name="HealthBeans" type="HBoxContainer"]
+z_index = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
