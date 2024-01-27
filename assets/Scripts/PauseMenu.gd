@@ -1,6 +1,7 @@
 extends Control
 
 @onready var this = $"."
+@onready var resume_button = $"CenterContainer/MainContainer/ButtonContainer/ResumeButton"
 
 func togglePause():
 	get_tree().paused = !get_tree().paused
@@ -19,3 +20,4 @@ func _on_quit_button_pressed():
 func _input(event):
 	if event.is_action_pressed("Pause"):
 		togglePause()
+		resume_button.grab_focus()

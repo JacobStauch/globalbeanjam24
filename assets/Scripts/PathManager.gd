@@ -4,7 +4,7 @@ signal load_levels_success
 signal load_levels_failure
 
 var level_data: Dictionary
-var current_level = "kingdom" # TODO: Should this be a game manager call?
+var current_level = "kingdom" # Default
 
 func _ready():
 	var file = FileAccess.open("res://assets/Text/level_transforms.json", FileAccess.READ)
@@ -27,3 +27,6 @@ func get_next_pos(idx: int):
 	
 	var pos = level_data[current_level][idx + 1]
 	return _convertToTransform2D(pos["x"], pos["y"], pos["scale"])
+
+func get_random_path():
+	return level_data[current_level]

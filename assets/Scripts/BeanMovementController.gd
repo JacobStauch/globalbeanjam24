@@ -1,24 +1,33 @@
 extends Node2D
 
 @onready var signalBus = get_node("/root/SignalBus")
-@onready var path_manager = get_tree().get_nodes_in_group("BenTest_Managers").filter(func(obj): return obj.name == "PathManager")[0] # TODO: wow i sure hate this
+
 @onready var timer = $"./MovementTimer"
 @onready var root = $".."
 var i = 0
 var canMove = false
 
+var path: Array = [{"x": 0.0, "y": 0.0, "scale": 1.0}] # Default
+
 signal at_end
 
 func _ready():
-	root.transform = path_manager.get_next_pos(-1)
+	root.transform = get_transform_from_point_idx(0)
 
 func _on_movement_timer_timeout():
 	print("timer timeout")
-	var next = path_manager.get_next_pos(i)
-	
-	if next == null:
+	i = i + 1
+	if i >= len(path):
 		timer.stop()
 		at_end.emit()
-	else:
-		root.transform = next
-	i = i + 1
+		return
+	
+	var next = path[i]
+	root.transform = get_transform_from_point_idx(i)
+
+func get_transform_from_point_idx(i):
+	var next = path[i]
+	return Transform2D(0, Vector2(next["scale"], next["scale"]), 0, Vector2(next["x"], next["y"]))
+
+func set_path(new_path):
+	path = new_path

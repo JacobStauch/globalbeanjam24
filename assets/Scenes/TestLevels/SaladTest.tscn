@@ -14,7 +14,7 @@ metadata/_edit_lock_ = true
 
 [node name="GameManager" parent="." instance=ExtResource("5_nj5dg")]
 
-[node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers"]]
+[node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers", "PathManagers"]]
 script = ExtResource("1_ogd56")
 
 [node name="DialogueBox" parent="." instance=ExtResource("1_6g1pr")]
