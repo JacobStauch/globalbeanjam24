@@ -20,13 +20,6 @@ offset_right = 1934.0
 offset_bottom = 1088.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_6yuuv")
 
-[node name="PauseMenu" parent="." instance=ExtResource("6_4xnyh")]
-visible = false
-offset_left = 920.0
-offset_top = 480.0
-offset_right = 920.0
-offset_bottom = 480.0
-
 [node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers", "PathManagers"]]
 script = ExtResource("3_esxpn")
 
@@ -38,5 +31,12 @@ offset_left = 84.0
 offset_top = 839.0
 offset_right = 474.0
 offset_bottom = 1019.0
+
+[node name="PauseMenu" parent="." instance=ExtResource("6_4xnyh")]
+visible = false
+offset_left = 920.0
+offset_top = 480.0
+offset_right = 920.0
+offset_bottom = 480.0
 
 [connection signal="new_bean_created" from="GameManager" to="GameManager" method="_on_new_bean_created"]

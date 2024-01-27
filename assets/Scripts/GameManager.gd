@@ -27,7 +27,7 @@ extends Node2D
 signal new_bean_created
 
 var beansKilled = 0
-var maxBeanCount = 3
+var maxBeanCount = 1
 var health = 3
 var freePaths = [0,1,2] 
 
@@ -66,16 +66,20 @@ func _on_bean_prompt_done(beanInstance):
 	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
-	if freePaths.size() > 0:
-		createBean(curLevel)
+	var randomBeanCount = randi_range(1,maxBeanCount)
+	for i in randomBeanCount:
+		if freePaths.size() > 0:
+			createBean(curLevel)
 
 func _on_hit(beanInstance):
 	health = health - 1
 	healthHUD.update_health(health)
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	beanInstance.queue_free()
-	if freePaths.size() > 0: #create bean if there is a free path
-		createBean(curLevel)
+	var randomBeanCount = randi_range(1,maxBeanCount)
+	for i in randomBeanCount:
+		if freePaths.size() > 0: #create bean if there is a free path
+			createBean(curLevel)
 
 func createBean(level: String):
 	var numBeanTypesInLevel = beanLevelJson[level].size()-1
@@ -94,7 +98,7 @@ func createBean(level: String):
 	beanPromptLabel.text = randomBeanPhrase
 	
 	var beanMovementScript = beanObject.get_node("MovementControl")
-	var randomPathIndex = randi_range(0,freePaths.size())
+	var randomPathIndex = randi_range(0,freePaths.size()-1)
 	var randomPath = freePaths[randomPathIndex]
 	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randomPath)), randomPath)
 	
@@ -112,7 +116,12 @@ func despawnAllBeans():
 func startCurLevel():
 	levelInProgress = true
 	curLevelDuration = levelDurations[curLevelIndex]
-	createBean(curLevel)
+	maxBeanCount = curLevelIndex + 1
+	var randomBeanCount = randi_range(1,maxBeanCount)
+	print(randomBeanCount)
+	for i in randomBeanCount:
+		if freePaths.size() > 0:
+			createBean(curLevel)
 
 func finishCurLevel():
 	despawnAllBeans()

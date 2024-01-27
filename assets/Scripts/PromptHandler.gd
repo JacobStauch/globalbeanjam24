@@ -58,6 +58,8 @@ func convertPromptTextToArray(prompt: String):
 				promptArray.append("Exclam")
 			"-":
 				promptArray.append("Minus")
+			"'":
+				promptArray.append("Apostrophe")
 			_:
 				promptArray.append(char)
 	print("Prompt array: ", promptArray)
