@@ -1,22 +1,16 @@
 {
-	"basicBean": {
-		"phrases": [
+	"basicBean": [
 			"Test Phrase",
 			"There are many words to type here."
-		 ]
-	},
-	"garbanzoBean": {
-		"phrases": [
+	],
+	"garbanzoBean": [
 			"Baked beans with extra garlic and herbs",
 			"Garbanzo beans blended into hummus",
 			"Pinto beans slow-cooked to perfection",
 			"Political ads saturate the airwaves",
 			"Primary caucuses influence delegate counts"
-		]
-	},
-	"blackEyedPea": {
-		"phrases": [
-			"Black-eyed peas in a spicy tomato sauce"
-		]
-	}
+	],
+	"blackEyedPea": [
+		"Black-eyed peas in a spicy tomato sauce"
+	]
 }

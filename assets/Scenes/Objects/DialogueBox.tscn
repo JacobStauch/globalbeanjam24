@@ -103,5 +103,3 @@ offset_top = -360.0
 offset_right = 1016.0
 offset_bottom = 288.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_0kve7")
-
-[connection signal="dialogue_finished" from="DialogueBox" to="." method="_on_dialogue_box_dialogue_finished"]

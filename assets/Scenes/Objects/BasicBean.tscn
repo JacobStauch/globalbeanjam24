@@ -22,6 +22,4 @@ autostart = true
 [node name="PromptHandler" parent="." instance=ExtResource("3_ugu4j")]
 position = Vector2(-256, 256)
 
-[connection signal="dialogue_finished" from="." to="MovementControl" method="_on_basic_bean_dialogue_finished"]
-[connection signal="dialogue_finished" from="." to="PromptHandler" method="_on_basic_bean_dialogue_finished"]
 [connection signal="timeout" from="MovementControl/MovementTimer" to="MovementControl" method="_on_movement_timer_timeout"]

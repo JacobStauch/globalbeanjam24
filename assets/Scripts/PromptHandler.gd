@@ -11,21 +11,18 @@ signal promptDoneSignal
 @onready var curIndex: int = 0
 @onready var isDone: bool = false
 
-var canType = false
-
 # TODO:
-# 1. Handle typing one prompt (Done)
-# 2. Change letter color based on correct or incorrect typing (Done)
-# 3. Begin implementing flags so each prompt manager
+# Stretch goals if we want to have multiple beans on screen
+# 1. Begin implementing flags so each prompt manager
 # will know whether there are active queries (has a letter been matched in any prompt)
 # by listening to the game manager so letters typed in the middle of a prompt will
 # not trigger the first letter in another prompt to be considered as typed
-# 4. Add flag to only change incorrect letters to red if it is an active query
+# 2. Add flag to only change incorrect letters to red if it is an active query
 # so that every other prompt doesn't flash a red letter when typing the first letter
 # for the desired prompt
-# 5. Once a query in the active queries has been completed, the others should have
+# 3. Once a query in the active queries has been completed, the others should have
 # colors and progress reset
-# 6. Block repeated key-presses while key is pressed (wait until the key is released)
+# 4. Block repeated key-presses while key is pressed (wait until the key is released)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,7 +34,7 @@ func _process(delta):
 	pass
 
 func _input(event):
-	if canType and event is InputEventKey and event.is_pressed():
+	if event is InputEventKey and event.is_pressed():
 		var letterTyped = OS.get_keycode_string(event.unicode)
 		print("Letter typed: ", letterTyped)
 		checkChar(letterTyped)
@@ -45,28 +42,30 @@ func _input(event):
 func convertPromptTextToArray(prompt: String):
 	var promptArray: Array
 	for char in prompt:
-		if (char == " "):
-			promptArray.append("Space")
-		elif (char == "."):
-			promptArray.append("Period")
-		elif (char == "!"):
-			promptArray.append("Exclam")
-		else:
-			promptArray.append(char)
+		match char:
+			" ":
+				promptArray.append("Space")
+			".":
+				promptArray.append("Period")
+			"!":
+				promptArray.append("Exclam")
+			"-":
+				promptArray.append("Minus")
+			_:
+				promptArray.append(char)
 	print("Prompt array: ", promptArray)
 	return promptArray
 
 func checkChar(letter: String):
 	if (!isDone):
 		# Correct letter
-		print("check char")
+		# print("check char")
 		if (letter == promptArray.front()):
 			promptArray.pop_front()
 			setLabelCorrectCharsGreen()
 			if (promptArray.size() == 0):
 				isDone = true
 				promptDoneSignal.emit()
-				print("here")
 				print("Prompt finished")
 			else:
 				curIndex += 1
@@ -93,7 +92,7 @@ func setLabelNextCharRed():
 	)
 	
 func colorChar(chars: String, color: Color) -> String:
-	print ("String to color: ", chars)
+	# print ("String to color: ", chars)
 	return "[color=" + color.to_html(false) + "]" + chars + "[/color]"
 
 func resetLabelColors():
@@ -101,10 +100,3 @@ func resetLabelColors():
 
 func centerString(stringIn: String):
 	return ("[center]" + stringIn + "[/center]")
-
-func _on_basic_bean_dialogue_finished():
-	canType = true
-	promptArray = convertPromptTextToArray(promptText)
-	print(promptArray.size())
-	print("can type")
-
