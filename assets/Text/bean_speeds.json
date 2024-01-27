@@ -1,0 +1,26 @@
+{
+	"basicBean": {
+		"min": 4.0,
+		"max": 7.0
+	},
+	"garbanzoBean": {
+		"min": 4.0,
+		"max": 5.0
+	},
+	"blackEyedPea": {
+		"min": 3.0,
+		"max": 5.0
+	},
+	"greenBeans": {
+		"min": 2.5,
+		"max": 4.0
+	},
+	"navyBeans": {
+		"min": 3.2,
+		"max": 5.0
+	},
+	"3dBean": {
+		"min": 4.0,
+		"max": 7.3
+	}
+}

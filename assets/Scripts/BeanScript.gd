@@ -2,12 +2,14 @@
 extends Node2D
 
 @onready var promptHandler = $PromptHandler
+@onready var movementController = $MovementControl
 @onready var signalBus = get_node("/root/SignalBus")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	promptHandler.promptDoneSignal.connect(_on_prompt_done)
 	promptHandler.beanSelected.connect(_on_bean_selected)
+	movementController.timeoutSignal.connect(_on_timeout)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -19,3 +21,9 @@ func _on_prompt_done():
 
 func _on_bean_selected():
 	signalBus.beanSelectedSignal.emit(self)
+
+func _on_timeout():
+	signalBus.beanAtEndSignal.emit(self)
+
+func get_bean_path_num():
+	return movementController.get_path_number()

@@ -1,7 +1,11 @@
 {
 	"kingdom": [
-		"basicBean",
-		"garbanzoBean",
+		"basicBean"
+	],
+	"castle": [
+		"garbanzoBean"
+	],
+	"chamber": [
 		"blackEyedPea"
 	]
 }
