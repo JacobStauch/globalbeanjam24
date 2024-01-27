@@ -6,6 +6,8 @@ extends Node2D
 @onready var beanObjectScene: PackedScene = preload("res://assets/Scenes/Objects/BasicBean.tscn")
 @onready var beanHudScene: PackedScene = preload("res://assets/Scenes/Objects/HealthBeans.tscn")
 @onready var beanDialogueBoxScene: PackedScene = preload("res://assets/Scenes/Objects/DialogueBox.tscn")
+@onready var camera = get_viewport().get_camera_2d()
+
 #Preload JSON files
 @onready var beanLevelJsonFile = FileAccess.open("res://assets/Text/level_beans.json", FileAccess.READ)
 @onready var beanPhraseJsonFile = FileAccess.open("res://assets/Text/bean_phrases.json", FileAccess.READ)
@@ -90,9 +92,7 @@ func _on_dialogue_box_finished(currentState):
 func _on_bean_prompt_done(beanInstance):
 	print("Prompt done signal received")
 	print("Found Node from signal: ", beanInstance.get_name())
-	print("Deleting bean")
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
-	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
 	var randomBeanCount = randi_range(1,maxBeanCount)
@@ -103,6 +103,7 @@ func _on_bean_prompt_done(beanInstance):
 func _on_hit(beanInstance):
 	health = health - 1
 	healthHUD.update_health(health)
+	camera.apply_shake()
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	beanInstance.queue_free()
 	if (health == 0):
