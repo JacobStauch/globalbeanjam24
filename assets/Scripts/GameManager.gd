@@ -56,6 +56,12 @@ func _ready():
 	var beanContainerNode = Node2D.new()
 	beanContainerNode.name = "BeanContainer"
 	self.add_child(beanContainerNode)
+	# Create player health HUD
+	var healthHudNode = beanHudScene.instantiate()
+	healthHudNode.name = "HealthBeans"
+	healthHudNode.hide()
+	self.add_child(healthHudNode)
+	healthHUD = $HealthBeans
 	
 	path_manager.current_level = curLevel
 	
