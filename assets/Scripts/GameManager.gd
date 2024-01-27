@@ -12,6 +12,8 @@ extends Node2D
 
 @onready var curLevel = "kingdom"
 
+@onready var path_manager = get_tree().get_first_node_in_group("PathManagers")
+
 signal new_bean_created
 
 var beansKilled = 0
@@ -24,6 +26,7 @@ func _ready():
 	# Connect signals
 	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
 	signalBus.dialogueBoxFinishedSignal.connect(_on_dialogue_box_finished)
+	path_manager.current_level = curLevel
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -58,6 +61,9 @@ func createBean(level: String):
 	var beanPromptHandler = beanObject.get_node("PromptHandler")
 	var beanPromptLabel: RichTextLabel = beanPromptHandler.get_node("RichTextLabel")
 	beanPromptLabel.text = randomBeanPhrase
+	
+	var beanMovementScript = beanObject.get_node("MovementControl")
+	beanMovementScript.set_path(path_manager.get_random_path())
 	
 	add_child(beanObject)
 	emit_signal("new_bean_created")

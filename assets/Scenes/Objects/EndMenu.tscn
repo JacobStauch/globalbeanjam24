@@ -1,3 +1,67 @@
-[gd_scene format=3 uid="uid://deae7rohl6cai"]
+[gd_scene load_steps=5 format=3 uid="uid://deae7rohl6cai"]
+
+[ext_resource type="Script" path="res://assets/Scripts/Menu.gd" id="1_g0h6j"]
+[ext_resource type="FontFile" uid="uid://cgssqwfr30ip2" path="res://assets/Fonts/Duckname.ttf" id="1_gi2ga"]
+[ext_resource type="Script" path="res://assets/Scripts/EndMenu.gd" id="2_umo08"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q1qjm"]
+bg_color = Color(0.662745, 0.333333, 0.270588, 1)
 
 [node name="EndMenu" type="Node2D"]
+script = ExtResource("1_g0h6j")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="BackgroundPanel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(800, 800)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q1qjm")
+script = ExtResource("2_umo08")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/BackgroundPanel"]
+layout_mode = 2
+offset_left = 288.0
+offset_top = 532.0
+offset_right = 498.0
+offset_bottom = 660.0
+
+[node name="MenuButton" type="Button" parent="CenterContainer/BackgroundPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_gi2ga")
+theme_override_font_sizes/font_size = 70
+text = "Main Menu"
+flat = true
+
+[node name="QuitButton" type="Button" parent="CenterContainer/BackgroundPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_gi2ga")
+theme_override_font_sizes/font_size = 70
+text = "Quit"
+flat = true
+
+[node name="WPMText" type="RichTextLabel" parent="CenterContainer/BackgroundPanel"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 140.0
+offset_right = 672.0
+offset_bottom = 436.0
+theme_override_fonts/normal_font = ExtResource("1_gi2ga")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "WPM: "
+
+[node name="BeansEatenText" type="RichTextLabel" parent="CenterContainer/BackgroundPanel"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 316.0
+offset_right = 760.0
+offset_bottom = 612.0
+theme_override_fonts/normal_font = ExtResource("1_gi2ga")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "Beans Eaten: "
+
+[connection signal="pressed" from="CenterContainer/BackgroundPanel/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="CenterContainer/BackgroundPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
