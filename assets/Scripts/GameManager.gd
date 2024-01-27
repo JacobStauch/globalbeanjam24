@@ -10,7 +10,15 @@ extends Node2D
 @onready var beanSpriteJson: Dictionary = JSON.parse_string(beanSpriteJsonFile.get_as_text())
 @onready var healthHUD = $HealthBeans
 
-@onready var curLevel = "kingdom"
+@onready var levels = ["kingdom", "castle", "chamber"]
+@onready var curLevelIndex = 0
+@onready var curLevel = levels[curLevelIndex]
+
+@onready var levelDurations = [10, 20, 30]
+@onready var curLevelDuration = 0
+@onready var levelStopwatch := 0.0
+
+@onready var levelInProgress: bool = false
 
 @onready var path_manager = get_tree().get_first_node_in_group("PathManagers")
 
@@ -28,16 +36,23 @@ func _ready():
 	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
 	signalBus.dialogueBoxFinishedSignal.connect(_on_dialogue_box_finished)
 	signalBus.beanAtEndSignal.connect(_on_hit)
+	# Create BeanContainer child node to hold all the Bean objects
+	var beanContainerNode = Node2D.new()
+	beanContainerNode.name = "BeanContainer"
+	self.add_child(beanContainerNode)
+	
 	path_manager.current_level = curLevel
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if (levelInProgress):
+		levelStopwatch += delta
+		if (levelStopwatch > curLevelDuration):
+			finishCurLevel()
 
 func _on_dialogue_box_finished():
 	print("Game Manager acknowledges dialogue box finished")
-	for i in maxBeanCount:
-		createBean(curLevel, i)
+	startCurLevel()
 
 func _on_bean_prompt_done(beanInstance):
 	print("Prompt done signal received")
@@ -46,10 +61,16 @@ func _on_bean_prompt_done(beanInstance):
 	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
-	if beansKilled >= maxBeanCount:
-		createBean(curLevel, 1)
+	
+	createBean(curLevel)
 
-func createBean(level: String, beanCount: int):
+func _on_hit(beanInstance):
+	health = health - 1
+	healthHUD.update_health(health)
+	beanInstance.queue_free()
+	createBean(curLevel)
+
+func createBean(level: String):
 	var numBeanTypesInLevel = beanLevelJson[level].size()-1
 	var randomBeanTypeFromLevel = beanLevelJson[level][randi_range(0,numBeanTypesInLevel)]
 	
@@ -66,11 +87,29 @@ func createBean(level: String, beanCount: int):
 	beanPromptLabel.text = randomBeanPhrase
 	
 	var beanMovementScript = beanObject.get_node("MovementControl")
-	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(beanCount)))
+	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randi_range(0,2))))
 	
-	add_child(beanObject)
+	$BeanContainer.add_child(beanObject)
 	emit_signal("new_bean_created")
+	
+func despawnAllBeans():
+	for c in $BeanContainer.get_children():
+		c.queue_free()
 
-func _on_hit():
-	health = health - 1
-	healthHUD.update_health(health)
+func startCurLevel():
+	levelInProgress = true
+	curLevelDuration = levelDurations[curLevelIndex]
+	createBean(curLevel)
+
+func finishCurLevel():
+	despawnAllBeans()
+	curLevelIndex += 1
+	refreshCurLevelVars()
+	levelInProgress = false
+	# immediately start next level for testing purposes
+	startCurLevel()
+	
+func refreshCurLevelVars():
+	curLevel = levels[curLevelIndex]
+	curLevelDuration = levelDurations[curLevelIndex]
+	levelStopwatch = 0.0

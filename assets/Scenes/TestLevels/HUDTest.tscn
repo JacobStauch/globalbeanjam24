@@ -34,7 +34,6 @@ script = ExtResource("3_esxpn")
 
 [node name="HealthBeans" parent="GameManager" instance=ExtResource("1_10h8s")]
 visible = false
-z_index = 1
 offset_left = 84.0
 offset_top = 839.0
 offset_right = 474.0

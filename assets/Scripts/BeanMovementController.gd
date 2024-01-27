@@ -1,5 +1,7 @@
 extends Node2D
 
+signal timeoutSignal
+
 @onready var signalBus = get_node("/root/SignalBus")
 
 @onready var timer = $"./MovementTimer"
@@ -17,7 +19,7 @@ func _on_movement_timer_timeout():
 	i = i + 1
 	if i >= len(path):
 		timer.stop()
-		signalBus.beanAtEndSignal.emit()
+		timeoutSignal.emit()
 		return
 	
 	var next = path[i]
