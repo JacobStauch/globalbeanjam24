@@ -8,15 +8,17 @@ signal dialogue_finished
 var dialogue
 var phraseNum = 0
 var finished = false
-#TODO: get currentState from game manager to show correct dialogue
-var currentState = "start"
+var currentState
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	$Timer.wait_time = textSpeed
 	dialogue = getDialogue()
 	nextPhrase()
 
+func setDialogue(state: String):
+	currentState = state
+	
 func getDialogue() -> Array:
 	var file = FileAccess.open(dialoguePath, FileAccess.READ)
 	var jsonContent = file.get_as_text()
