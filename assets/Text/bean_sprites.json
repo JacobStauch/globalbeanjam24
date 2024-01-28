@@ -1,9 +1,9 @@
 {
-	"basicBean": "res://assets/Graphics/bean_basic.png",
-	"garbanzoBean": "res://assets/Graphics/garbanzobean.png",
-	"blackEyedPea": "res://assets/Graphics/blackeyedpea.png",
-	"greenBeans": "res://assets/Graphics/GreenBeans1.png",
-	"navyBeans": "res://assets/Graphics/NavyBean1.png",
-	"3dBean": "res://assets/Graphics/3DBean1.png",
-	"chicagoBean": "res://assets/Graphics/ChicagoBean.png"
+	"basicBean": "basic_bean_anim",
+	"garbanzoBean": "garbanzo_bean_anim",
+	"blackEyedPea": "black_eyed_pea_anim",
+	"greenBeans": "green_beans_anim",
+	"navyBeans": "navy_beans_anim",
+	"3dBean": "3d_bean_anim",
+	"chicagoBean": "chicago_bean_anim"
 }
