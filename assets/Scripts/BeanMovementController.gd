@@ -25,9 +25,12 @@ func _on_movement_timer_timeout():
 	print("timer timeout")
 	i = i + 1
 	if i >= len(path):
-		timer.stop()
-		timeoutSignal.emit()
-		return
+		if !root.isBoss:
+			timer.stop()
+			timeoutSignal.emit()
+			return
+		i = 0
+		print("Boss resetting to 0")
 	
 	var next = path[i]
 	root.transform = get_transform_from_point_idx(i)

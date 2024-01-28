@@ -52,4 +52,5 @@ func get_bean_path_num():
 	return movementController.get_path_number()
 
 func _on_boss_attack_timer_timeout():
+	signalBus.beanAtEndSignal.emit(self)
 	print("Boss attacks")

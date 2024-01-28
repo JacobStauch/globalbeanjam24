@@ -126,10 +126,11 @@ func _on_hit(beanInstance):
 	camera.apply_shake()
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	updateCharsTyped(beanInstance)
-	beanInstance.queue_free()
+	if !beanInstance.isBoss:
+		beanInstance.queue_free()
 	if (health == 0):
 		finishGameBadEnd()
-	else:
+	elif !beanInstance.isBoss:
 		var randomBeanCount = randi_range(1,maxBeanCount)
 		for i in randomBeanCount:
 			if freePaths.size() > 0: #create bean if there is a free path
@@ -255,9 +256,11 @@ func startDialogue(state: String):
 
 func finishGameGoodEnd():
 	healthHUD.hide()
+	despawnAllBeans()
 	levelInProgress = false
 	startDialogue("ending_good")
 	
 func finishGameBadEnd():
+	despawnAllBeans()
 	levelInProgress = false
 	startDialogue("ending_bad")
