@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dkl4rv13g56fd"]
+[gd_scene load_steps=19 format=3 uid="uid://dkl4rv13g56fd"]
 
 [ext_resource type="Texture2D" uid="uid://bctiwirjqhr2u" path="res://assets/Graphics/bean_basic.png" id="1_ai70f"]
 [ext_resource type="Script" path="res://assets/Scripts/BeanScript.gd" id="1_ekw5c"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://b2r8x13aayhhj" path="res://assets/Graphics/GreenBeans2.png" id="12_kulqb"]
 [ext_resource type="Texture2D" uid="uid://dm7uoy6nwhlcd" path="res://assets/Graphics/NavyBean1.png" id="13_h5t0d"]
 [ext_resource type="Texture2D" uid="uid://b5enbtmh6s1hq" path="res://assets/Graphics/NavyBean2.png" id="14_mm74l"]
+[ext_resource type="AudioStream" uid="uid://djrb6nic0ee8" path="res://assets/Sounds/bong.wav" id="17_v8ix8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6trg7"]
 animations = [{
@@ -122,6 +123,9 @@ position = Vector2(-278, -610)
 
 [node name="BossAttackTimer" type="Timer" parent="."]
 wait_time = 7.0
+
+[node name="DeathAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_v8ix8")
 
 [connection signal="timeout" from="MovementControl/MovementTimer" to="MovementControl" method="_on_movement_timer_timeout"]
 [connection signal="timeout" from="BossAttackTimer" to="." method="_on_boss_attack_timer_timeout"]

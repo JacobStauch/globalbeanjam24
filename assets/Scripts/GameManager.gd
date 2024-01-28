@@ -266,7 +266,7 @@ func startDialogue(state: String):
 	signalBus.dialogueStartedSignal.emit()
 	var dialogueBoxContainerNode = beanDialogueBoxScene.instantiate()
 	dialogueBoxContainerNode.name = "DialogueBoxContainer"
-	
+	healthHUD.hide()
 	var dialogueBoxNode = dialogueBoxContainerNode.get_node("DialogueBox")
 	dialogueBoxNode.setDialogue(state)
 	

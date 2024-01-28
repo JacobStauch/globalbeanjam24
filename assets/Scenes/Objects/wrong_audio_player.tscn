@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://cootp5gqxpkud"]
+
+[ext_resource type="AudioStream" uid="uid://ht64yix86vmd" path="res://assets/Sounds/bad/bad1.wav" id="1_cbfld"]
+[ext_resource type="AudioStream" uid="uid://gspsdb8nyc7r" path="res://assets/Sounds/bad/bad2.wav" id="2_hhdna"]
+[ext_resource type="AudioStream" uid="uid://c0nu4v0w6rvpy" path="res://assets/Sounds/bad/bad3.wav" id="3_5toad"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5yilw"]
+random_pitch = 1.09
+streams_count = 3
+stream_0/stream = ExtResource("1_cbfld")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_hhdna")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_5toad")
+stream_2/weight = 1.0
+
+[node name="WrongAudioPlayer" type="AudioStreamPlayer2D"]
+stream = SubResource("AudioStreamRandomizer_5yilw")
