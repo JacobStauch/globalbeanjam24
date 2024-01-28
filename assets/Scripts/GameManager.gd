@@ -133,6 +133,7 @@ func _on_hit(beanInstance):
 	health = health - 1
 	healthHUD.update_health(health)
 	camera.apply_shake()
+	$SoundEffects.play()
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	updateCharsTyped(beanInstance)
 	if !beanInstance.isBoss:
