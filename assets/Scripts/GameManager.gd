@@ -105,7 +105,6 @@ func _on_bean_prompt_done(beanInstance):
 	print("Found Node from signal: ", beanInstance.get_name())
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	updateCharsTyped(beanInstance)
-	beanInstance.queue_free()
 	beansKilled += 1
 	print("Beans Killed: ", beansKilled)
 	var randomBeanCount = randi_range(1,maxBeanCount)
