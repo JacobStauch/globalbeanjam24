@@ -5,6 +5,7 @@ signal dialogueBoxFinishedSignal
 signal beanSelectedSignal
 signal beanAtEndSignal
 signal beanCreatedSignal
+signal dialogueStartedSignal
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

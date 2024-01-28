@@ -49,6 +49,7 @@ var beansKilled = 0
 var maxBeanCount = 1
 var health = 3
 var freePaths = [0,1,2]
+var dialogue_in_progress = false
 
 @onready var bossPhrasesUsed = get_random_boss_phrases()
 
@@ -92,18 +93,17 @@ func _on_dialogue_box_finished(currentState):
 	print("Game Manager acknowledges dialogue box finished")
 	print("Dialogue state finished: ", currentState)
 	$DialogueBoxContainer.queue_free()
-	match currentState:
-		"start":
-			healthHUD.show()
-			startCurLevel()
-		_:
-			var endMenu = get_node("../EndMenu")
-			var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
-			var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
-			panel.setWPM(wpm)
-			panel.setBeansEaten(beansKilled)
-			endMenu.show()
-			endMenu.auto_select_option()
+	if currentState in levels or currentState == "start":
+		healthHUD.show()
+		startCurLevel()
+	else:
+		var endMenu = get_node("../EndMenu")
+		var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
+		var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
+		panel.setWPM(wpm)
+		panel.setBeansEaten(beansKilled)
+		endMenu.show()
+		endMenu.auto_select_option()
 
 func _on_bean_prompt_done(beanInstance):
 	print("Prompt done signal received")
@@ -209,10 +209,10 @@ func finishCurLevel():
 	if (levels.size() == curLevelIndex):
 		finishGameGoodEnd()
 	else:
+		startLevelDialogue(levels[curLevelIndex])
 		refreshCurLevelVars()
 		levelInProgress = false
 		# immediately start next level for testing purposes
-		startCurLevel()
 	
 func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
@@ -247,6 +247,8 @@ func get_random_boss_phrases():
 	return to_use
 
 func startDialogue(state: String):
+	dialogue_in_progress = true
+	signalBus.dialogueStartedSignal.emit()
 	var dialogueBoxContainerNode = beanDialogueBoxScene.instantiate()
 	dialogueBoxContainerNode.name = "DialogueBoxContainer"
 	
@@ -264,3 +266,7 @@ func finishGameBadEnd():
 	despawnAllBeans()
 	levelInProgress = false
 	startDialogue("ending_bad")
+	
+func startLevelDialogue(currentLevel: String):
+	startDialogue(currentLevel)
+	
