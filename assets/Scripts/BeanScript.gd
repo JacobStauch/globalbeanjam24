@@ -11,6 +11,7 @@ var isBoss = false
 
 @onready var camera = get_viewport().get_camera_2d()
 @onready var timer = $"./MovementControl/MovementTimer"
+@onready var deathAudioPlayer = $"DeathAudioPlayer"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -29,6 +30,7 @@ func _on_prompt_done():
 	# Bubble up the prompt Done signal with the Bean node that triggered it
 	timer.stop()
 	signalBus.beanPromptDoneSignal.emit(self)
+	deathAudioPlayer.play()
 	var cameraPosition = camera.get_screen_center_position()
 	var direction = 2000
 	if (position.x < cameraPosition.x):

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bxwdv827sw5xd"
+path="res://.godot/imported/key10.wav-d6237ff2e78699c91b0afdb9ba5c75d1.sample"
+
+[deps]
+
+source_file="res://assets/Sounds/Key Strokes/key10.wav"
+dest_files=["res://.godot/imported/key10.wav-d6237ff2e78699c91b0afdb9ba5c75d1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

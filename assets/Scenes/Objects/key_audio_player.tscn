@@ -1,0 +1,55 @@
+[gd_scene load_steps=17 format=3 uid="uid://cs7sib4r7irwo"]
+
+[ext_resource type="AudioStream" uid="uid://b1yne3pwpoym0" path="res://assets/Sounds/Key Strokes/key1.wav" id="1_60003"]
+[ext_resource type="AudioStream" uid="uid://bxivaol3dkgcs" path="res://assets/Sounds/Key Strokes/key2.wav" id="2_lutb5"]
+[ext_resource type="AudioStream" uid="uid://m84i6debw7h3" path="res://assets/Sounds/Key Strokes/key11.wav" id="3_k272n"]
+[ext_resource type="AudioStream" uid="uid://dsa80sl300ae7" path="res://assets/Sounds/Key Strokes/key12.wav" id="4_1hyjf"]
+[ext_resource type="AudioStream" uid="uid://cqmeai8pom8tf" path="res://assets/Sounds/Key Strokes/key13.wav" id="5_8fu7i"]
+[ext_resource type="AudioStream" uid="uid://cwcw1i76ocs7m" path="res://assets/Sounds/Key Strokes/key15.wav" id="6_xdfg3"]
+[ext_resource type="AudioStream" uid="uid://clfqe3i56gfb5" path="res://assets/Sounds/Key Strokes/key16.wav" id="7_k6bgp"]
+[ext_resource type="AudioStream" uid="uid://bteumc46cevhj" path="res://assets/Sounds/Key Strokes/key3.wav" id="8_4i3ds"]
+[ext_resource type="AudioStream" uid="uid://dwv2ql7avfjh0" path="res://assets/Sounds/Key Strokes/key4.wav" id="9_fbr47"]
+[ext_resource type="AudioStream" uid="uid://cnf0oh5nye1ll" path="res://assets/Sounds/Key Strokes/key5.wav" id="10_6a5jn"]
+[ext_resource type="AudioStream" uid="uid://cg04qmupl4byf" path="res://assets/Sounds/Key Strokes/key6.wav" id="11_bpppy"]
+[ext_resource type="AudioStream" uid="uid://cxwmfq4j7q5in" path="res://assets/Sounds/Key Strokes/key7.wav" id="12_g50t2"]
+[ext_resource type="AudioStream" uid="uid://c6b1meq7yp43o" path="res://assets/Sounds/Key Strokes/key8.wav" id="13_anoqk"]
+[ext_resource type="AudioStream" uid="uid://d131tnqu7mqui" path="res://assets/Sounds/Key Strokes/key9.wav" id="14_lisb6"]
+[ext_resource type="AudioStream" uid="uid://bxwdv827sw5xd" path="res://assets/Sounds/Key Strokes/key10.wav" id="15_mmaqb"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w50kn"]
+random_pitch = 1.2
+streams_count = 15
+stream_0/stream = ExtResource("1_60003")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_lutb5")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("8_4i3ds")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("9_fbr47")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("10_6a5jn")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("11_bpppy")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("12_g50t2")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("13_anoqk")
+stream_7/weight = 1.0
+stream_8/stream = ExtResource("14_lisb6")
+stream_8/weight = 1.0
+stream_9/stream = ExtResource("15_mmaqb")
+stream_9/weight = 1.0
+stream_10/stream = ExtResource("3_k272n")
+stream_10/weight = 1.0
+stream_11/stream = ExtResource("4_1hyjf")
+stream_11/weight = 1.0
+stream_12/stream = ExtResource("5_8fu7i")
+stream_12/weight = 1.0
+stream_13/stream = ExtResource("6_xdfg3")
+stream_13/weight = 1.0
+stream_14/stream = ExtResource("7_k6bgp")
+stream_14/weight = 1.0
+
+[node name="KeyAudioPlayer" type="AudioStreamPlayer2D"]
+stream = SubResource("AudioStreamRandomizer_w50kn")
+volume_db = 2.0

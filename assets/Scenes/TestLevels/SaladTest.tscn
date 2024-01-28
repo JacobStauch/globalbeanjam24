@@ -47,5 +47,5 @@ script = ExtResource("6_boq6w")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_0vsia")
-volume_db = 12.0
+volume_db = 3.0
 autoplay = true
