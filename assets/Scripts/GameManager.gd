@@ -112,7 +112,7 @@ func _on_bean_prompt_done(beanInstance):
 	updateCharsTyped(beanInstance)
 	beansKilled += 1
 	if curLevelIndex == len(levels) - 1:
-		print("Done with boss bean")
+		finishGameGoodEnd()
 		return
 	#print("Beans Killed: ", beansKilled)
 	var randomBeanCount = randi_range(1,maxBeanCount)
@@ -126,10 +126,11 @@ func _on_hit(beanInstance):
 	camera.apply_shake()
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	updateCharsTyped(beanInstance)
-	beanInstance.queue_free()
+	if !beanInstance.isBoss:
+		beanInstance.queue_free()
 	if (health == 0):
 		finishGameBadEnd()
-	else:
+	elif !beanInstance.isBoss:
 		var randomBeanCount = randi_range(1,maxBeanCount)
 		for i in randomBeanCount:
 			if freePaths.size() > 0: #create bean if there is a free path
@@ -170,7 +171,7 @@ func createBean(level: String, isLastLevel: bool = false):
 	var beanMovementScript = beanObject.get_node("MovementControl")
 	var randomPathIndex = randi_range(0,freePaths.size()-1)
 	var randomPath = freePaths[randomPathIndex]
-	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randomPath)), randomPath)
+	beanMovementScript.set_path(path_manager.get_random_path(curLevel+str(randomPath)), randomPath)
 	
 	var beanMovementTimer = beanMovementScript.get_node("MovementTimer") as Timer
 	beanMovementTimer.wait_time = getRandomTime(randomBeanTypeFromLevel)
@@ -259,5 +260,6 @@ func finishGameGoodEnd():
 	startDialogue("ending_good")
 	
 func finishGameBadEnd():
+	despawnAllBeans()
 	levelInProgress = false
 	startDialogue("ending_bad")

@@ -20,9 +20,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 16.0
-offset_top = 816.0
+offset_top = 717.045
 offset_right = 480.0
-offset_bottom = 1061.0
+offset_bottom = 1070.05
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -33,6 +33,13 @@ size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_511yp")
 theme_override_font_sizes/font_size = 100
 text = "Start"
+flat = true
+
+[node name="CreditsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_511yp")
+theme_override_font_sizes/font_size = 100
+text = "Credits"
 flat = true
 
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
@@ -71,4 +78,5 @@ scale = Vector2(0.11194, 0.11194)
 texture = ExtResource("6_yjk81")
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

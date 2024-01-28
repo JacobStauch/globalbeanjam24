@@ -1,5 +1,9 @@
 {
 	"basicBean": "res://assets/Graphics/bean_basic.png",
 	"garbanzoBean": "res://assets/Graphics/garbanzobean.png",
-	"blackEyedPea": "res://assets/Graphics/blackeyedpea.png"
+	"blackEyedPea": "res://assets/Graphics/blackeyedpea.png",
+	"greenBeans": "res://assets/Graphics/GreenBeans1.png",
+	"navyBeans": "res://assets/Graphics/NavyBean1.png",
+	"3dBean": "res://assets/Graphics/3DBean1.png",
+	"chicagoBean": "res://assets/Graphics/ChicagoBean.png"
 }
