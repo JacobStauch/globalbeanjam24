@@ -171,7 +171,7 @@ func createBean(level: String, isLastLevel: bool = false):
 	var beanMovementScript = beanObject.get_node("MovementControl")
 	var randomPathIndex = randi_range(0,freePaths.size()-1)
 	var randomPath = freePaths[randomPathIndex]
-	beanMovementScript.set_path(path_manager.get_random_path("kingdom"+str(randomPath)), randomPath)
+	beanMovementScript.set_path(path_manager.get_random_path(curLevel+str(randomPath)), randomPath)
 	
 	var beanMovementTimer = beanMovementScript.get_node("MovementTimer") as Timer
 	beanMovementTimer.wait_time = getRandomTime(randomBeanTypeFromLevel)
