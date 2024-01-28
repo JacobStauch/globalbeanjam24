@@ -77,6 +77,8 @@ func convertPromptTextToArray(prompt: String):
 				promptArray.append("Question")
 			",":
 				promptArray.append("Comma")
+			"*":
+				promptArray.append("Asterisk")
 			_:
 				promptArray.append(char)
 	#print("Prompt array: ", promptArray)

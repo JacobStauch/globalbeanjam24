@@ -32,7 +32,7 @@ extends Node2D
 @onready var curLevel = levels[curLevelIndex]
 
 #Create level timer vars
-@onready var levelDurations = [40, 90, 30]
+@onready var levelDurations = [40, 40, 30]
 @onready var curLevelDuration = 0
 @onready var levelStopwatch := 0.0
 
@@ -128,6 +128,7 @@ func _on_bean_prompt_done(beanInstance):
 	for i in randomBeanCount:
 		if freePaths.size() > 0 and 3 - freePaths.size() < maxBeanCount:
 			createBean(curLevel)
+		await get_tree().create_timer(1.5).timeout
 
 func _on_hit(beanInstance):
 	health = health - 1
@@ -145,6 +146,7 @@ func _on_hit(beanInstance):
 		for i in randomBeanCount:
 			if freePaths.size() > 0 and 3 - freePaths.size() < maxBeanCount: #create bean if there is a free path
 				createBean(curLevel)
+			await get_tree().create_timer(1.5).timeout
 
 func _on_bean_created_signal(beanInstance):
 	var beanPathNum = beanInstance.get_bean_path_num()
@@ -213,6 +215,7 @@ func startCurLevel():
 	for i in randomBeanCount:
 		if freePaths.size() > 0 and 3 - freePaths.size() < maxBeanCount:
 			createBean(curLevel, isLastLevel)
+		await get_tree().create_timer(1.5).timeout
 
 func finishCurLevel():
 	print("Done with level")

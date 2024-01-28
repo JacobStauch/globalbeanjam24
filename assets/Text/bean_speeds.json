@@ -12,12 +12,12 @@
 		"max": 5.0
 	},
 	"greenBeans": {
-		"min": 2.5,
-		"max": 4.0
+		"min": 4.5,
+		"max": 7.0
 	},
 	"navyBeans": {
-		"min": 3.2,
-		"max": 5.0
+		"min": 4.2,
+		"max": 7.0
 	},
 	"3dBean": {
 		"min": 4.0,
