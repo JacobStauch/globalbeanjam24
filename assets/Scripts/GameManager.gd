@@ -41,6 +41,7 @@ extends Node2D
 # Get reference to Camera node
 @onready var camera = get_viewport().get_camera_2d()
 
+
 # Create Game Manager signals
 signal new_bean_created
 
@@ -252,7 +253,7 @@ func startDialogue(state: String):
 	signalBus.dialogueStartedSignal.emit()
 	var dialogueBoxContainerNode = beanDialogueBoxScene.instantiate()
 	dialogueBoxContainerNode.name = "DialogueBoxContainer"
-	
+	healthHUD.hide()
 	var dialogueBoxNode = dialogueBoxContainerNode.get_node("DialogueBox")
 	dialogueBoxNode.setDialogue(state)
 	

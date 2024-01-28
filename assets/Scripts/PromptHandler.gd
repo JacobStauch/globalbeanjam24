@@ -13,6 +13,8 @@ signal beanSelected
 @onready var curIndex: int = 0
 @onready var isDone: bool = false
 @onready var signalBus = get_node("/root/SignalBus")
+@onready var keyAudioPlayer = $KeyAudioPlayer
+@onready var wrongAudioPlayer = $WrongAudioPlayer
 
 var promptIndex = 0
 var prompts: Array = ["Default Prompt"]
@@ -83,6 +85,7 @@ func checkChar(letter: String):
 		charsTyped += 1
 		if (letter == promptArray.front()):
 			signalBus.beanSelectedSignal.emit(get_parent())
+			keyAudioPlayer.play()
 			promptArray.pop_front()
 			setLabelCorrectCharsGreen()
 			if (promptArray.size() == 0):
@@ -94,6 +97,7 @@ func checkChar(letter: String):
 		else:
 			if (letter != ""):
 				errorsTyped += 1
+				wrongAudioPlayer.play()
 				setLabelNextCharRed()
 		
 func completePhrase():
