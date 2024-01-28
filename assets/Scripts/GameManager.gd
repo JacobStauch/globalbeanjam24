@@ -89,9 +89,16 @@ func _on_dialogue_box_finished(currentState):
 	$DialogueBoxContainer.queue_free()
 	match currentState:
 		"start":
+			healthHUD.show()
 			startCurLevel()
 		_:
-			get_node("../EndMenu").show()
+			var endMenu = get_node("../EndMenu")
+			var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
+			var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
+			panel.setWPM(wpm)
+			panel.setBeansEaten(beansKilled)
+			endMenu.show()
+			endMenu.auto_select_option()
 
 func _on_bean_prompt_done(beanInstance):
 	print("Prompt done signal received")

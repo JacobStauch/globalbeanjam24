@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cia08ep4p0qos"]
+[gd_scene load_steps=8 format=3 uid="uid://cia08ep4p0qos"]
 
 [ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="1_ogd56"]
 [ext_resource type="Texture2D" uid="uid://sgf58l0e8mjr" path="res://assets/Graphics/KingdomBackground.png" id="5_8ay31"]
 [ext_resource type="PackedScene" uid="uid://bju3ia3r8w6o" path="res://assets/Scenes/Objects/PauseMenu.tscn" id="5_g2o1u"]
 [ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="5_nj5dg"]
 [ext_resource type="PackedScene" uid="uid://deae7rohl6cai" path="res://assets/Scenes/Objects/EndMenu.tscn" id="6_bnlr7"]
+[ext_resource type="Script" path="res://assets/Scenes/TestLevels/Camera2D.gd" id="6_boq6w"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lwnts"]
 texture = ExtResource("5_8ay31")
@@ -36,3 +37,4 @@ visible = false
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true
 anchor_mode = 0
+script = ExtResource("6_boq6w")

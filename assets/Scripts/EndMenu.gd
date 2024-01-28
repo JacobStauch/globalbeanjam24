@@ -14,8 +14,10 @@ func _process(delta):
 
 func setWPM(wpm: int):
 	finalWPM = wpm
+	$WPMText.bbcode_text = "WPM: " + str(finalWPM)
 	print("WPM: ", finalWPM)
 
 func setBeansEaten(killCount: int):
 	beansEaten = killCount
+	$BeansEatenText.bbcode_text = "Beans Eaten: " + str(beansEaten)
 	print("beans eaten: ", beansEaten)

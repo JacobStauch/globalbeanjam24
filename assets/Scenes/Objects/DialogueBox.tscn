@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://kayuqroo0hjl"]
 
 [ext_resource type="Script" path="res://assets/Scripts/DialogueBox.gd" id="1_be8v6"]
-[ext_resource type="Script" path="res://assets/Scripts/DialogueBoxManager.gd" id="1_wf23v"]
+[ext_resource type="Script" path="res://assets/Scripts/DialogueBoxManager.gd" id="1_ycuyo"]
 [ext_resource type="FontFile" uid="uid://dmhwtthyptvqi" path="res://assets/Fonts/Momcake-Bold.otf" id="2_r827a"]
 [ext_resource type="FontFile" uid="uid://bacru1d6lc3p4" path="res://assets/Fonts/Momcake-Thin.otf" id="3_q0kvb"]
 [ext_resource type="Texture2D" uid="uid://dy1vgo0jngx1v" path="res://assets/Graphics/beanking_happy.png" id="4_akx54"]
@@ -32,7 +32,7 @@ _data = {
 }
 
 [node name="DialogueBox" type="Node2D"]
-script = ExtResource("1_wf23v")
+script = ExtResource("1_ycuyo")
 
 [node name="DialogueBox" type="Panel" parent="."]
 offset_left = 224.0
