@@ -5,7 +5,6 @@ class_name BeanScript
 @onready var promptHandler = $PromptHandler
 @onready var movementController = $MovementControl
 @onready var signalBus = get_node("/root/SignalBus")
-@onready var camera = %Camera2D
 @onready var boss_attack_timer = $BossAttackTimer
 
 var isBoss = false
