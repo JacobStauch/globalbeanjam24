@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://b2r8x13aayhhj" path="res://assets/Graphics/GreenBeans2.png" id="12_kulqb"]
 [ext_resource type="Texture2D" uid="uid://dm7uoy6nwhlcd" path="res://assets/Graphics/NavyBean1.png" id="13_h5t0d"]
 [ext_resource type="Texture2D" uid="uid://b5enbtmh6s1hq" path="res://assets/Graphics/NavyBean2.png" id="14_mm74l"]
-[ext_resource type="AudioStream" uid="uid://djrb6nic0ee8" path="res://assets/Sounds/bong.wav" id="17_v8ix8"]
+[ext_resource type="AudioStream" uid="uid://djrb6nic0ee8" path="res://assets/Sounds/bong.wav" id="17_r1yvv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6trg7"]
 animations = [{
@@ -96,7 +96,7 @@ animations = [{
 "texture": ExtResource("14_mm74l")
 }],
 "loop": true,
-"name": &"navy_bean_anim",
+"name": &"navy_beans_anim",
 "speed": 3.0
 }]
 
@@ -105,8 +105,7 @@ script = ExtResource("1_ekw5c")
 
 [node name="BasicBeanSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6trg7")
-animation = &"green_beans_anim"
-autoplay = "basic_bean_anim"
+animation = &"navy_beans_anim"
 speed_scale = 0.4
 
 [node name="MovementControl" type="Node2D" parent="."]
@@ -125,7 +124,8 @@ position = Vector2(-278, -610)
 wait_time = 7.0
 
 [node name="DeathAudioPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("17_v8ix8")
+stream = ExtResource("17_r1yvv")
+volume_db = 4.0
 
 [connection signal="timeout" from="MovementControl/MovementTimer" to="MovementControl" method="_on_movement_timer_timeout"]
 [connection signal="timeout" from="BossAttackTimer" to="." method="_on_boss_attack_timer_timeout"]

@@ -32,7 +32,7 @@ extends Node2D
 @onready var curLevel = levels[curLevelIndex]
 
 #Create level timer vars
-@onready var levelDurations = [3, 3, 30]
+@onready var levelDurations = [40, 90, 30]
 @onready var curLevelDuration = 0
 @onready var levelStopwatch := 0.0
 
@@ -126,7 +126,7 @@ func _on_bean_prompt_done(beanInstance):
 	#print("Beans Killed: ", beansKilled)
 	var randomBeanCount = randi_range(1,maxBeanCount)
 	for i in randomBeanCount:
-		if freePaths.size() > 0:
+		if freePaths.size() > 0 and 3 - freePaths.size() < maxBeanCount:
 			createBean(curLevel)
 
 func _on_hit(beanInstance):
@@ -143,7 +143,7 @@ func _on_hit(beanInstance):
 	elif !beanInstance.isBoss:
 		var randomBeanCount = randi_range(1,maxBeanCount)
 		for i in randomBeanCount:
-			if freePaths.size() > 0: #create bean if there is a free path
+			if freePaths.size() > 0 and 3 - freePaths.size() < maxBeanCount: #create bean if there is a free path
 				createBean(curLevel)
 
 func _on_bean_created_signal(beanInstance):
@@ -202,7 +202,7 @@ func despawnAllBeans():
 func startCurLevel():
 	levelInProgress = true
 	curLevelDuration = levelDurations[curLevelIndex]
-	maxBeanCount = curLevelIndex + 1
+	maxBeanCount += 1
 	var randomBeanCount = randi_range(1,maxBeanCount)
 	
 	var isLastLevel = curLevelIndex == len(levels) - 1
@@ -211,7 +211,7 @@ func startCurLevel():
 		
 	#print(randomBeanCount)
 	for i in randomBeanCount:
-		if freePaths.size() > 0:
+		if freePaths.size() > 0 and 3 - freePaths.size() < maxBeanCount:
 			createBean(curLevel, isLastLevel)
 
 func finishCurLevel():

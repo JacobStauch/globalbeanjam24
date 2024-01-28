@@ -75,6 +75,8 @@ func convertPromptTextToArray(prompt: String):
 				promptArray.append("Apostrophe")
 			"?":
 				promptArray.append("Question")
+			",":
+				promptArray.append("Comma")
 			_:
 				promptArray.append(char)
 	#print("Prompt array: ", promptArray)

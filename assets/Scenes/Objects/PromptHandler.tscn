@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://gcip23akssvb"]
 
 [ext_resource type="Script" path="res://assets/Scripts/PromptHandler.gd" id="1_4k6ch"]
-[ext_resource type="FontFile" uid="uid://wvkw4d8qxsk1" path="res://assets/Fonts/Bubbly-Regular.otf" id="2_hdki8"]
-[ext_resource type="PackedScene" uid="uid://cs7sib4r7irwo" path="res://assets/Scenes/Objects/key_audio_player.tscn" id="3_5s1p3"]
-[ext_resource type="PackedScene" uid="uid://cootp5gqxpkud" path="res://assets/Scenes/Objects/wrong_audio_player.tscn" id="3_b6r6t"]
+[ext_resource type="FontFile" uid="uid://cdqmmdur0ivl1" path="res://assets/Fonts/Halogen.ttf" id="2_55mn4"]
+[ext_resource type="PackedScene" path="res://assets/Scenes/Objects/wrong_audio_player.tscn" id="3_xf555"]
+[ext_resource type="PackedScene" path="res://assets/Scenes/Objects/key_audio_player.tscn" id="4_cmhwb"]
 
 [node name="PromptHandler" type="Node2D"]
 script = ExtResource("1_4k6ch")
@@ -13,13 +13,15 @@ offset_right = 546.0
 offset_bottom = 1082.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 1
-theme_override_constants/shadow_outline_size = 4
+theme_override_constants/shadow_outline_size = 3
 theme_override_fonts/normal_font = ExtResource("2_55mn4")
-theme_override_font_sizes/normal_font_size = 72
+theme_override_font_sizes/normal_font_size = 120
 bbcode_enabled = true
 text = "There are many words to type here."
 scroll_active = false
 
-[node name="WrongAudioPlayer" parent="." instance=ExtResource("3_b6r6t")]
+[node name="WrongAudioPlayer" parent="." instance=ExtResource("3_xf555")]
+volume_db = 4.0
 
-[node name="KeyAudioPlayer" parent="." instance=ExtResource("3_5s1p3")]
+[node name="KeyAudioPlayer" parent="." instance=ExtResource("4_cmhwb")]
+volume_db = 3.0

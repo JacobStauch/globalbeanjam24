@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://c183b2qk4j33c"]
 
 [ext_resource type="Script" path="res://assets/Scripts/GameManager.gd" id="1_ph76p"]
-[ext_resource type="PackedScene" uid="uid://cs7sib4r7irwo" path="res://assets/Scenes/Objects/key_audio_player.tscn" id="2_0gry3"]
+[ext_resource type="PackedScene" path="res://assets/Scenes/Objects/key_audio_player.tscn" id="2_0gry3"]
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_ph76p")
 
 [node name="KeyAudioPlayer" parent="." instance=ExtResource("2_0gry3")]
+volume_db = 3.0

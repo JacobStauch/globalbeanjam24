@@ -19,7 +19,7 @@ metadata/_edit_lock_ = true
 
 [node name="SoundEffects" type="AudioStreamPlayer2D" parent="GameManager"]
 stream = ExtResource("8_64d8s")
-volume_db = 17.0
+volume_db = 4.0
 
 [node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers", "PathManagers"]]
 script = ExtResource("1_ogd56")
@@ -47,5 +47,5 @@ script = ExtResource("6_boq6w")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_0vsia")
-volume_db = 3.0
+volume_db = 2.5
 autoplay = true
