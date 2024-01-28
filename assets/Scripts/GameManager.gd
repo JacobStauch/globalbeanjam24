@@ -56,6 +56,7 @@ var beansKilled = 0
 var maxBeanCount = 1
 var health = 3
 var freePaths = [0,1,2]
+var dialogue_in_progress = false
 
 @onready var bossPhrasesUsed = get_random_boss_phrases()
 
@@ -100,18 +101,18 @@ func _on_dialogue_box_finished(currentState):
 	print("Game Manager acknowledges dialogue box finished")
 	print("Dialogue state finished: ", currentState)
 	$DialogueBoxContainer.queue_free()
-	match currentState:
-		"start":
-			healthHUD.show()
-			doLevelTransition()
-		_:
-			var endMenu = get_node("../EndMenu")
-			var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
-			var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
-			panel.setWPM(wpm)
-			panel.setBeansEaten(beansKilled)
-			endMenu.show()
-			endMenu.auto_select_option()
+
+	if currentState in levels or currentState == "start":
+		healthHUD.show()
+		doLevelTransition()
+	else:
+		var endMenu = get_node("../EndMenu")
+		var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
+		var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
+		panel.setWPM(wpm)
+		panel.setBeansEaten(beansKilled)
+		endMenu.show()
+		endMenu.auto_select_option()
 
 func _on_bean_prompt_done(beanInstance):
 	print("Prompt done signal received")
@@ -170,8 +171,9 @@ func createBean(level: String, isLastLevel: bool = false):
 	var beanObject = beanObjectScene.instantiate() as BeanScript
 	beanObject.isBoss = isLastLevel
 	
-	var beanSprite: Sprite2D = beanObject.get_node("BasicBeanSprite")
-	beanSprite.texture = load(beanSpriteJson[randomBeanTypeFromLevel])
+	var beanSprite: AnimatedSprite2D = beanObject.get_node("BasicBeanSprite")
+	beanSprite.set_animation(beanSpriteJson[randomBeanTypeFromLevel])
+	beanSprite.play()
 	
 	var beanPromptHandler = beanObject.get_node("PromptHandler") as PromptHandler
 	
@@ -222,9 +224,9 @@ func finishCurLevel():
 	if (levels.size() == curLevelIndex):
 		finishGameGoodEnd()
 	else:
+		startLevelDialogue(levels[curLevelIndex])
 		refreshCurLevelVars()
 		levelInProgress = false
-		doLevelTransition()
 	
 func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
@@ -259,6 +261,8 @@ func get_random_boss_phrases():
 	return to_use
 
 func startDialogue(state: String):
+	dialogue_in_progress = true
+	signalBus.dialogueStartedSignal.emit()
 	var dialogueBoxContainerNode = beanDialogueBoxScene.instantiate()
 	dialogueBoxContainerNode.name = "DialogueBoxContainer"
 	
@@ -276,6 +280,10 @@ func finishGameBadEnd():
 	despawnAllBeans()
 	levelInProgress = false
 	startDialogue("ending_bad")
+	
+func startLevelDialogue(currentLevel: String):
+	healthHUD.hide()
+	startDialogue(currentLevel)
 	
 func doLevelTransition():
 	var curLevelBgImage = Image.load_from_file(levelSpritesJson[curLevel])

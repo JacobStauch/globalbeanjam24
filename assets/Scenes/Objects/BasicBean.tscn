@@ -1,15 +1,111 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkl4rv13g56fd"]
+[gd_scene load_steps=18 format=3 uid="uid://dkl4rv13g56fd"]
 
 [ext_resource type="Texture2D" uid="uid://bctiwirjqhr2u" path="res://assets/Graphics/bean_basic.png" id="1_ai70f"]
 [ext_resource type="Script" path="res://assets/Scripts/BeanScript.gd" id="1_ekw5c"]
+[ext_resource type="Texture2D" uid="uid://bl7p6ffyhhodc" path="res://assets/Graphics/3DBean1.png" id="2_5gmhf"]
 [ext_resource type="Script" path="res://assets/Scripts/BeanMovementController.gd" id="2_6j223"]
+[ext_resource type="Texture2D" uid="uid://jsjxverq6n3a" path="res://assets/Graphics/bean_basic2.png" id="3_1dx6x"]
+[ext_resource type="Texture2D" uid="uid://cmalje1dyq7iw" path="res://assets/Graphics/3DBean2.png" id="3_3875j"]
 [ext_resource type="PackedScene" uid="uid://gcip23akssvb" path="res://assets/Scenes/Objects/PromptHandler.tscn" id="3_ugu4j"]
+[ext_resource type="Texture2D" uid="uid://b07rq7xw8dmoi" path="res://assets/Graphics/blackeyedpea2.png" id="6_eei1o"]
+[ext_resource type="Texture2D" uid="uid://0cpr0fe0r4b0" path="res://assets/Graphics/blackeyedpea.png" id="7_jt034"]
+[ext_resource type="Texture2D" uid="uid://cyw7ny2w7f8ix" path="res://assets/Graphics/ChicagoBean.png" id="8_w5q63"]
+[ext_resource type="Texture2D" uid="uid://cfpaov3o33bfi" path="res://assets/Graphics/garbanzobean2.png" id="9_kf6gi"]
+[ext_resource type="Texture2D" uid="uid://cvo1t67kym13q" path="res://assets/Graphics/garbanzobean.png" id="10_yhkrc"]
+[ext_resource type="Texture2D" uid="uid://bjgcnopi4v64r" path="res://assets/Graphics/GreenBeans1.png" id="11_e8tnq"]
+[ext_resource type="Texture2D" uid="uid://b2r8x13aayhhj" path="res://assets/Graphics/GreenBeans2.png" id="12_kulqb"]
+[ext_resource type="Texture2D" uid="uid://dm7uoy6nwhlcd" path="res://assets/Graphics/NavyBean1.png" id="13_h5t0d"]
+[ext_resource type="Texture2D" uid="uid://b5enbtmh6s1hq" path="res://assets/Graphics/NavyBean2.png" id="14_mm74l"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6trg7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5gmhf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3875j")
+}],
+"loop": true,
+"name": &"3d_bean_anim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1dx6x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_ai70f")
+}],
+"loop": true,
+"name": &"basic_bean_anim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_eei1o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jt034")
+}],
+"loop": true,
+"name": &"black_eyed_pea_anim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_w5q63")
+}],
+"loop": true,
+"name": &"chicago_bean_anim",
+"speed": 3.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_kf6gi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_yhkrc")
+}],
+"loop": true,
+"name": &"garbanzo_bean_anim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_e8tnq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kulqb")
+}],
+"loop": true,
+"name": &"green_beans_anim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_h5t0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_mm74l")
+}],
+"loop": true,
+"name": &"navy_beans_anim",
+"speed": 3.0
+}]
 
 [node name="BasicBean" type="Node2D"]
 script = ExtResource("1_ekw5c")
 
-[node name="BasicBeanSprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_ai70f")
+[node name="BasicBeanSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6trg7")
+animation = &"navy_beans_anim"
+speed_scale = 0.4
 
 [node name="MovementControl" type="Node2D" parent="."]
 process_mode = 1
@@ -17,10 +113,11 @@ script = ExtResource("2_6j223")
 
 [node name="MovementTimer" type="Timer" parent="MovementControl"]
 process_mode = 1
+wait_time = 10.0
 autostart = true
 
 [node name="PromptHandler" parent="." instance=ExtResource("3_ugu4j")]
-position = Vector2(-256, 256)
+position = Vector2(-278, -610)
 
 [node name="BossAttackTimer" type="Timer" parent="."]
 wait_time = 7.0

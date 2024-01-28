@@ -26,6 +26,46 @@
 			"emotion": "happy"
 		}
 	],
+	"castle": [
+		{
+			"text": "hehehehe, seems like you might have a chance",
+			"emotion": "happy"
+		},
+		{
+			"text": "It looks like you've managed to make it through my kingdom",
+			"emotion": "happy"
+		},
+		{
+			"text": "Let's see if you can breach my bean castle!",
+			"emotion": "laughing"
+		},
+		{
+			"text": "Wouldn't it be funny if there were more beans attacking at once?",
+			"emotion": "laughing"
+		},
+		{
+			"text": "I'll check in later, au revoir!",
+			"emotion": "happy"
+		}
+	],
+	"chamber": [
+		{
+			"text": "hahaha, this is really getting interesting now!",
+			"emotion": "laughing"
+		},
+		{
+			"text": "You've made it through my bean castle, welcome to my chamber!",
+			"emotion": "happy"
+		},
+		{
+			"text": "you'll be facing off against my strongest bean, this is gonna be good.",
+			"emotion": "happy"
+		},
+		{
+			"text": "Good luck, too-da-loo!",
+			"emotion": "happy"
+		}
+	],
 	"ending_bad": [
 		{
 			"text": "Wow, this is pathetic. I really expected more from you.",

@@ -1,23 +1,29 @@
 {
 	"basicBean": [
-			"One baked bean",
-			"Yum yum",
-			"Mr Bean's very cool",
-			"A dietary staple",
-			"Sweet and savory"
+		"One baked bean",
+		"Yum yum",
+		"Mr Bean's very cool",
+		"A dietary staple",
+		"Sweet and savory",
+		"This is a bean",
+		"A baked-- A BAKED BEAN"
 	],
 	"garbanzoBean": [
-			"Baked beans with extra garlic and herbs",
-			"Garbanzo beans blended into hummus",
-			"Pinto beans slow-cooked to perfection",
-			"Political ads saturate the airwaves",
-			"Primary caucuses influence delegate counts"
+		"Baked beans with extra garlic and herbs",
+		"Garbanzo beans blended into hummus",
+		"Pinto beans slow-cooked to perfection",
+		"Political ads saturate the airwaves",
+		"Primary caucuses influence delegate counts",
+		"Falafel is pretty good"
 	],
 	"blackEyedPea": [
 		"Black-eyed peas in a spicy tomato sauce",
 		"I got a feeling that tonight's gonna be a good night",
 		"Romans prefer me to chickpeas, but why",
-		"I am an excellent source of folate"
+		"I am an excellent source of folate",
+		"Hoppin John salad",
+		"Just can't get enough",
+		"Let's get it started"
 	],
 	"greenBeans": [
 		"Green bean casserole is underrated",
@@ -38,7 +44,25 @@
 		"Defragmented my stomach to make more room for beans",
 		"Canned bake beans are steamed, not baked, another untruth for the information age",
 		"As an AI language model, I cannot cross-pollinate the perfect bean.",
-		"Ate a magnetron to cook the beans in transit"
+		"Ate a magnetron to cook the beans in transit",
+		"Sauteed grean beans with garlic",
+		"Are green beans actually beans"
+	],
+	"navyBeans": [
+		"Navy beans with ham",
+		"Boston baked beans",
+		"Andalusian gazpacho",
+		"Navy bean pie",
+		"Get it navy bean Navy uniform"
+	],
+	"3dBean": [
+		"The Metaverse was a horrible failure",
+		"Virtual reality gives me a headache",
+		"Blender is shockingly uncomplicated",
+		"I don't understand Unreal",
+		"The fbx file format makes me sad",
+		"Tesseract",
+		"3D simulation of cow aerodynamics"
 	],
 	"chicagoBean": [
 		"Chicago"
