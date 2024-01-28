@@ -82,6 +82,7 @@ Sarah Lester
 "
 
 [node name="Credits2" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 653.0
 offset_top = 446.0
 offset_right = 1272.0
@@ -99,6 +100,7 @@ Sarah Lester
 Cameron Walker"
 
 [node name="Credits3" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 1173.0
 offset_top = 766.0
 offset_right = 1868.0
