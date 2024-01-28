@@ -118,7 +118,7 @@ wait_time = 10.0
 autostart = true
 
 [node name="PromptHandler" parent="." instance=ExtResource("3_ugu4j")]
-position = Vector2(-256, 256)
+position = Vector2(-278, -610)
 
 [node name="BossAttackTimer" type="Timer" parent="."]
 wait_time = 7.0
