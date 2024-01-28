@@ -121,7 +121,7 @@ autostart = true
 position = Vector2(-278, -610)
 
 [node name="BossAttackTimer" type="Timer" parent="."]
-wait_time = 7.0
+wait_time = 15.0
 
 [node name="DeathAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_r1yvv")
