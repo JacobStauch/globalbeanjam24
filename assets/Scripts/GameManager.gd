@@ -5,6 +5,8 @@ extends Node2D
 #Preload Object scenes
 @onready var beanObjectScene: PackedScene = preload("res://assets/Scenes/Objects/BasicBean.tscn")
 @onready var beanHudScene: PackedScene = preload("res://assets/Scenes/Objects/HealthBeans.tscn")
+@onready var beanDialogueBoxScene: PackedScene = preload("res://assets/Scenes/Objects/DialogueBox.tscn")
+
 #Preload JSON files
 @onready var beanLevelJsonFile = FileAccess.open("res://assets/Text/level_beans.json", FileAccess.READ)
 @onready var beanPhraseJsonFile = FileAccess.open("res://assets/Text/bean_phrases.json", FileAccess.READ)
@@ -36,6 +38,9 @@ extends Node2D
 # Get reference to PathManager node
 @onready var path_manager = get_tree().get_first_node_in_group("PathManagers")
 
+# Get reference to Camera node
+@onready var camera = get_viewport().get_camera_2d()
+
 # Create Game Manager signals
 signal new_bean_created
 
@@ -46,6 +51,10 @@ var health = 3
 var freePaths = [0,1,2]
 
 @onready var bossPhrasesUsed = get_random_boss_phrases()
+
+var totalTimeInSeconds = 0.0
+var totalCharsTyped = 0
+var totalErrorsTyped = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -66,8 +75,11 @@ func _ready():
 	healthHudNode.hide()
 	self.add_child(healthHudNode)
 	healthHUD = $HealthBeans
-	
+	# Set current level for PathManager
 	path_manager.current_level = curLevel
+	# Initiate intro dialogue
+	startDialogue("start")
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -76,15 +88,28 @@ func _process(delta):
 		if (levelStopwatch > curLevelDuration):
 			finishCurLevel()
 
-func _on_dialogue_box_finished():
-	#print("Game Manager acknowledges dialogue box finished")
-	startCurLevel()
+func _on_dialogue_box_finished(currentState):
+	print("Game Manager acknowledges dialogue box finished")
+	print("Dialogue state finished: ", currentState)
+	$DialogueBoxContainer.queue_free()
+	match currentState:
+		"start":
+			healthHUD.show()
+			startCurLevel()
+		_:
+			var endMenu = get_node("../EndMenu")
+			var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
+			var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
+			panel.setWPM(wpm)
+			panel.setBeansEaten(beansKilled)
+			endMenu.show()
+			endMenu.auto_select_option()
 
 func _on_bean_prompt_done(beanInstance):
-	#print("Prompt done signal received")
-	#print("Found Node from signal: ", beanInstance.get_name())
-	#print("Deleting bean")
+	print("Prompt done signal received")
+	print("Found Node from signal: ", beanInstance.get_name())
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
+	updateCharsTyped(beanInstance)
 	beanInstance.queue_free()
 	beansKilled += 1
 	if curLevelIndex == len(levels) - 1:
@@ -99,12 +124,29 @@ func _on_bean_prompt_done(beanInstance):
 func _on_hit(beanInstance):
 	health = health - 1
 	healthHUD.update_health(health)
+	camera.apply_shake()
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
+	updateCharsTyped(beanInstance)
 	beanInstance.queue_free()
-	var randomBeanCount = randi_range(1,maxBeanCount)
-	for i in randomBeanCount:
-		if freePaths.size() > 0: #create bean if there is a free path
-			createBean(curLevel)
+	if (health == 0):
+		finishGameBadEnd()
+	else:
+		var randomBeanCount = randi_range(1,maxBeanCount)
+		for i in randomBeanCount:
+			if freePaths.size() > 0: #create bean if there is a free path
+				createBean(curLevel)
+
+func _on_bean_created_signal(beanInstance):
+	var beanPathNum = beanInstance.get_bean_path_num()
+	switch_path_locked(beanPathNum, false)
+	print("bean path: ", beanPathNum)
+
+func updateCharsTyped(beanInstance):
+	var promptHandler = beanInstance.get_node("PromptHandler")
+	var charsTyped = promptHandler.getCharsTyped()
+	var errorsTyped = promptHandler.getErrorsTyped()
+	totalCharsTyped += charsTyped
+	totalErrorsTyped += errorsTyped
 
 func createBean(level: String, isLastLevel: bool = false):
 	var numBeanTypesInLevel = beanLevelJson[level].size()-1
@@ -159,10 +201,17 @@ func finishCurLevel():
 	print("Done with level")
 	despawnAllBeans()
 	curLevelIndex += 1
-	refreshCurLevelVars()
-	levelInProgress = false
-	# immediately start next level for testing purposes
-	startCurLevel()
+	
+	totalTimeInSeconds += levelStopwatch
+	print("total time: ", totalTimeInSeconds)
+	
+	if (levels.size() == curLevelIndex):
+		finishGameGoodEnd()
+	else:
+		refreshCurLevelVars()
+		levelInProgress = false
+		# immediately start next level for testing purposes
+		startCurLevel()
 	
 func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
@@ -187,11 +236,6 @@ func switch_path_locked(beanPath, destroyed):
 		freePaths.append(beanPath)
 	#print("freePaths2: ", freePaths)
 
-func _on_bean_created_signal(beanInstance):
-	var beanPathNum = beanInstance.get_bean_path_num()
-	switch_path_locked(beanPathNum, false)
-	#print("bean path: ", beanPathNum)
-
 func get_random_boss_phrases():
 	var random_phrases = bossPhrasesJson.duplicate()
 	random_phrases.shuffle()
@@ -200,3 +244,21 @@ func get_random_boss_phrases():
 		to_use.append(random_phrases[0])
 		random_phrases.pop_front()
 	return to_use
+
+func startDialogue(state: String):
+	var dialogueBoxContainerNode = beanDialogueBoxScene.instantiate()
+	dialogueBoxContainerNode.name = "DialogueBoxContainer"
+	
+	var dialogueBoxNode = dialogueBoxContainerNode.get_node("DialogueBox")
+	dialogueBoxNode.setDialogue(state)
+	
+	self.add_child(dialogueBoxContainerNode)
+
+func finishGameGoodEnd():
+	healthHUD.hide()
+	levelInProgress = false
+	startDialogue("ending_good")
+	
+func finishGameBadEnd():
+	levelInProgress = false
+	startDialogue("ending_bad")

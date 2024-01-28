@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcn1fv4pwd34e"]
+[gd_scene load_steps=5 format=3 uid="uid://yr5vtc3juto3"]
 
 [ext_resource type="Script" path="res://assets/Scripts/HealthBeans.gd" id="1_k4gwk"]
 [ext_resource type="Texture2D" uid="uid://jucrxfxmspa4" path="res://assets/UI/bean_red.png" id="2_b6tp8"]

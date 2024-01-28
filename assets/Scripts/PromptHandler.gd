@@ -19,6 +19,8 @@ var prompts: Array = ["Default Prompt"]
 
 var isSelected = false
 var anySelected = false
+var charsTyped = 0
+var errorsTyped = 0
 
 # TODO:
 # Stretch goals if we want to have multiple beans on screen
@@ -78,6 +80,7 @@ func checkChar(letter: String):
 	if (!isDone and (isSelected or !anySelected)):
 		# Correct letter
 		# print("check char")
+		charsTyped += 1
 		if (letter == promptArray.front()):
 			signalBus.beanSelectedSignal.emit(get_parent())
 			promptArray.pop_front()
@@ -90,6 +93,7 @@ func checkChar(letter: String):
 		# Incorrect letter
 		else:
 			if (letter != ""):
+				errorsTyped += 1
 				setLabelNextCharRed()
 		
 func completePhrase():
@@ -139,3 +143,9 @@ func _on_bean_selected(beanInstance):
 func _on_bean_prompt_done(beanInstance):
 	isSelected = false
 	anySelected = false
+
+func getCharsTyped():
+	return charsTyped
+
+func getErrorsTyped():
+	return errorsTyped
