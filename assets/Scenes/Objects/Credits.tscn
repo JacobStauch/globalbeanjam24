@@ -1,0 +1,121 @@
+[gd_scene load_steps=11 format=3 uid="uid://d4myshbtluxaw"]
+
+[ext_resource type="Texture2D" uid="uid://sgf58l0e8mjr" path="res://assets/Graphics/KingdomBackground.png" id="1_hl6ux"]
+[ext_resource type="Script" path="res://assets/Scripts/Credits.gd" id="1_wpck2"]
+[ext_resource type="Texture2D" uid="uid://bctiwirjqhr2u" path="res://assets/Graphics/bean_basic.png" id="2_q4777"]
+[ext_resource type="Texture2D" uid="uid://0cpr0fe0r4b0" path="res://assets/Graphics/blackeyedpea.png" id="3_w1iwp"]
+[ext_resource type="Texture2D" uid="uid://cyw7ny2w7f8ix" path="res://assets/Graphics/ChicagoBean.png" id="4_oro25"]
+[ext_resource type="Texture2D" uid="uid://cwya1yilwm0tv" path="res://assets/Graphics/beanking_laughing.png" id="5_j5k5x"]
+[ext_resource type="FontFile" uid="uid://dlo0hs2msvoy8" path="res://assets/Fonts/Heyhoo.ttf" id="6_vje26"]
+[ext_resource type="FontFile" uid="uid://dmhwtthyptvqi" path="res://assets/Fonts/Momcake-Bold.otf" id="7_ys0gf"]
+[ext_resource type="Theme" uid="uid://bwupqwo68knin" path="res://assets/UI/PauseMenuTheme.tres" id="8_s4w0t"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dyrni"]
+texture = ExtResource("1_hl6ux")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wpck2")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_dyrni")
+
+[node name="BeanBasic" type="Sprite2D" parent="Background"]
+position = Vector2(162, 879)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_q4777")
+
+[node name="Blackeyedpea" type="Sprite2D" parent="Background"]
+position = Vector2(1567, 450)
+scale = Vector2(0.382463, 0.382463)
+texture = ExtResource("3_w1iwp")
+
+[node name="ChicagoBean" type="Sprite2D" parent="Background"]
+position = Vector2(588, 294)
+scale = Vector2(0.166333, 0.166333)
+texture = ExtResource("4_oro25")
+
+[node name="BeankingLaughing" type="Sprite2D" parent="Background"]
+position = Vector2(957, 198)
+scale = Vector2(0.15566, 0.15566)
+texture = ExtResource("5_j5k5x")
+
+[node name="GameTitle" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 111.0
+offset_bottom = 311.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("6_vje26")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "[center][color=brown]Typing of the Beans"
+
+[node name="Credits1" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 481.0
+offset_right = 744.0
+offset_bottom = 952.0
+theme_override_fonts/normal_font = ExtResource("7_ys0gf")
+theme_override_font_sizes/normal_font_size = 72
+bbcode_enabled = true
+text = "[color=#224488]Programming
+[color=white]Ben High
+Cameron Walker
+Jacob Stauch
+Sarah Lester
+
+"
+
+[node name="Credits2" type="RichTextLabel" parent="."]
+offset_left = 653.0
+offset_top = 446.0
+offset_right = 1272.0
+offset_bottom = 1060.0
+theme_override_fonts/normal_font = ExtResource("7_ys0gf")
+theme_override_font_sizes/normal_font_size = 72
+bbcode_enabled = true
+text = "[color=#224488]Art
+[color=white]Sarah Lester
+Ben High
+
+[color=#224488]Music
+[color=white]Jacob Stauch
+Sarah Lester
+Cameron Walker"
+
+[node name="Credits3" type="RichTextLabel" parent="."]
+offset_left = 1173.0
+offset_top = 766.0
+offset_right = 1868.0
+offset_bottom = 1380.0
+theme_override_fonts/normal_font = ExtResource("7_ys0gf")
+theme_override_font_sizes/normal_font_size = 72
+bbcode_enabled = true
+text = "[color=#224488]Chicago bean picture
+[color=white]Chait Goli (pexels)"
+
+[node name="GoBackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1457.0
+offset_top = 964.0
+offset_right = 1863.0
+offset_bottom = 1036.0
+theme = ExtResource("8_s4w0t")
+text = "Back to Main Menu"
+
+[connection signal="pressed" from="GoBackButton" to="." method="_on_go_back_button_pressed"]
