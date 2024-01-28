@@ -112,7 +112,7 @@ func _on_bean_prompt_done(beanInstance):
 	updateCharsTyped(beanInstance)
 	beansKilled += 1
 	if curLevelIndex == len(levels) - 1:
-		print("Done with boss bean")
+		finishGameGoodEnd()
 		return
 	#print("Beans Killed: ", beansKilled)
 	var randomBeanCount = randi_range(1,maxBeanCount)
@@ -256,7 +256,6 @@ func startDialogue(state: String):
 
 func finishGameGoodEnd():
 	healthHUD.hide()
-	despawnAllBeans()
 	levelInProgress = false
 	startDialogue("ending_good")
 	
