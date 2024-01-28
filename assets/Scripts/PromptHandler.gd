@@ -1,4 +1,5 @@
 extends Node2D
+class_name PromptHandler
 
 signal promptDoneSignal
 signal beanSelected
@@ -7,11 +8,14 @@ signal beanSelected
 @export var red = Color("#a63537")
 
 @onready var promptLabel: RichTextLabel = $RichTextLabel
-@onready var promptText: String = promptLabel.text
-@onready var promptArray: Array = convertPromptTextToArray(promptText)
+@onready var promptText: String
+@onready var promptArray: Array
 @onready var curIndex: int = 0
 @onready var isDone: bool = false
 @onready var signalBus = get_node("/root/SignalBus")
+
+var promptIndex = 0
+var prompts: Array = ["Default Prompt"]
 
 var isSelected = false
 var anySelected = false
@@ -31,10 +35,9 @@ var anySelected = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	promptLabel.parse_bbcode(centerString(promptText))
+	setCurrentPrompt()
 	signalBus.beanSelectedSignal.connect(_on_bean_selected)
 	signalBus.beanPromptDoneSignal.connect(_on_bean_prompt_done)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -43,8 +46,14 @@ func _process(delta):
 func _input(event):
 	if event is InputEventKey and event.is_pressed():
 		var letterTyped = OS.get_keycode_string(event.unicode)
-		print("Letter typed: ", letterTyped)
+		#print("Letter typed: ", letterTyped)
 		checkChar(letterTyped)
+
+func setCurrentPrompt():
+	promptText = prompts[promptIndex]
+	promptArray = convertPromptTextToArray(promptText)
+	promptLabel.parse_bbcode(centerString(promptText))
+	curIndex = 0
 
 func convertPromptTextToArray(prompt: String):
 	var promptArray: Array
@@ -62,7 +71,7 @@ func convertPromptTextToArray(prompt: String):
 				promptArray.append("Apostrophe")
 			_:
 				promptArray.append(char)
-	print("Prompt array: ", promptArray)
+	#print("Prompt array: ", promptArray)
 	return promptArray
 
 func checkChar(letter: String):
@@ -74,15 +83,22 @@ func checkChar(letter: String):
 			promptArray.pop_front()
 			setLabelCorrectCharsGreen()
 			if (promptArray.size() == 0):
-				isDone = true
-				promptDoneSignal.emit()
-				print("Prompt finished")
+				completePhrase()
+				#print("Prompt finished")
 			else:
 				curIndex += 1
 		# Incorrect letter
 		else:
 			if (letter != ""):
 				setLabelNextCharRed()
+		
+func completePhrase():
+	promptIndex = promptIndex + 1
+	if promptIndex >= len(prompts):
+		isDone = true
+		promptDoneSignal.emit()
+		return
+	setCurrentPrompt()
 		
 func setLabelCorrectCharsGreen():
 	promptLabel.parse_bbcode(
@@ -112,12 +128,12 @@ func centerString(stringIn: String):
 	return ("[center]" + stringIn + "[/center]")
 	
 func _on_bean_selected(beanInstance):
-	print("here")
-	print("bean selected: ", beanInstance.get_name())
-	print("current parent: ", get_parent().get_name())
+	#print("here")
+	#print("bean selected: ", beanInstance.get_name())
+	#print("current parent: ", get_parent().get_name())
 	if beanInstance.get_name() == get_parent().get_name():
 		isSelected = true
-		print("selected")
+		#print("selected")
 	anySelected = true
 
 func _on_bean_prompt_done(beanInstance):

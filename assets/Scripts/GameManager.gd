@@ -10,11 +10,13 @@ extends Node2D
 @onready var beanPhraseJsonFile = FileAccess.open("res://assets/Text/bean_phrases.json", FileAccess.READ)
 @onready var beanSpriteJsonFile = FileAccess.open("res://assets/Text/bean_sprites.json", FileAccess.READ)
 @onready var beanSpeedJsonFile = FileAccess.open("res://assets/Text/bean_speeds.json", FileAccess.READ)
+@onready var bossPhrasesJsonFile = FileAccess.open("res://assets/Text/boss_phrases.json", FileAccess.READ)
 # Create parsed JSON vars
 @onready var beanLevelJson: Dictionary = JSON.parse_string(beanLevelJsonFile.get_as_text())
 @onready var beanPhraseJson: Dictionary = JSON.parse_string(beanPhraseJsonFile.get_as_text())
 @onready var beanSpriteJson: Dictionary = JSON.parse_string(beanSpriteJsonFile.get_as_text())
 @onready var beanSpeedJson: Dictionary = JSON.parse_string(beanSpeedJsonFile.get_as_text())
+@onready var bossPhrasesJson: Array = JSON.parse_string(bossPhrasesJsonFile.get_as_text())
 
 # Initialize HUD reference
 @onready var healthHUD
@@ -24,7 +26,7 @@ extends Node2D
 @onready var curLevel = levels[curLevelIndex]
 
 #Create level timer vars
-@onready var levelDurations = [10, 20, 30]
+@onready var levelDurations = [3, 3, 30]
 @onready var curLevelDuration = 0
 @onready var levelStopwatch := 0.0
 
@@ -41,7 +43,9 @@ signal new_bean_created
 var beansKilled = 0
 var maxBeanCount = 1
 var health = 3
-var freePaths = [0,1,2] 
+var freePaths = [0,1,2]
+
+@onready var bossPhrasesUsed = get_random_boss_phrases()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,23 +71,26 @@ func _ready():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (levelInProgress):
+	if (levelInProgress && curLevelIndex != len(levels) - 1):
 		levelStopwatch += delta
 		if (levelStopwatch > curLevelDuration):
 			finishCurLevel()
 
 func _on_dialogue_box_finished():
-	print("Game Manager acknowledges dialogue box finished")
+	#print("Game Manager acknowledges dialogue box finished")
 	startCurLevel()
 
 func _on_bean_prompt_done(beanInstance):
-	print("Prompt done signal received")
-	print("Found Node from signal: ", beanInstance.get_name())
-	print("Deleting bean")
+	#print("Prompt done signal received")
+	#print("Found Node from signal: ", beanInstance.get_name())
+	#print("Deleting bean")
 	switch_path_locked(beanInstance.get_bean_path_num(), true)
 	beanInstance.queue_free()
 	beansKilled += 1
-	print("Beans Killed: ", beansKilled)
+	if curLevelIndex == len(levels) - 1:
+		print("Done with boss bean")
+		return
+	#print("Beans Killed: ", beansKilled)
 	var randomBeanCount = randi_range(1,maxBeanCount)
 	for i in randomBeanCount:
 		if freePaths.size() > 0:
@@ -99,21 +106,25 @@ func _on_hit(beanInstance):
 		if freePaths.size() > 0: #create bean if there is a free path
 			createBean(curLevel)
 
-func createBean(level: String):
+func createBean(level: String, isLastLevel: bool = false):
 	var numBeanTypesInLevel = beanLevelJson[level].size()-1
 	var randomBeanTypeFromLevel = beanLevelJson[level][randi_range(0,numBeanTypesInLevel)]
 	
 	var numPhrasesForBeanType = beanPhraseJson[randomBeanTypeFromLevel].size()-1
 	var randomBeanPhrase = beanPhraseJson[randomBeanTypeFromLevel][randi_range(0,numPhrasesForBeanType)]
 	
-	var beanObject = beanObjectScene.instantiate()
+	var beanObject = beanObjectScene.instantiate() as BeanScript
+	beanObject.isBoss = isLastLevel
 	
 	var beanSprite: Sprite2D = beanObject.get_node("BasicBeanSprite")
 	beanSprite.texture = load(beanSpriteJson[randomBeanTypeFromLevel])
 	
-	var beanPromptHandler = beanObject.get_node("PromptHandler")
-	var beanPromptLabel: RichTextLabel = beanPromptHandler.get_node("RichTextLabel")
-	beanPromptLabel.text = randomBeanPhrase
+	var beanPromptHandler = beanObject.get_node("PromptHandler") as PromptHandler
+	
+	if !isLastLevel:
+		beanPromptHandler.prompts = [randomBeanPhrase] as Array[String]
+	else:
+		beanPromptHandler.prompts = bossPhrasesUsed
 	
 	var beanMovementScript = beanObject.get_node("MovementControl")
 	var randomPathIndex = randi_range(0,freePaths.size()-1)
@@ -132,16 +143,20 @@ func despawnAllBeans():
 		c.queue_free()
 
 func startCurLevel():
+	var isLastLevel = curLevelIndex == len(levels) - 1
 	levelInProgress = true
 	curLevelDuration = levelDurations[curLevelIndex]
 	maxBeanCount = curLevelIndex + 1
 	var randomBeanCount = randi_range(1,maxBeanCount)
-	print(randomBeanCount)
+	if isLastLevel: # Force there to only be one bean in the last level (the boss bean)
+		randomBeanCount = 1
+	#print(randomBeanCount)
 	for i in randomBeanCount:
 		if freePaths.size() > 0:
-			createBean(curLevel)
+			createBean(curLevel, isLastLevel)
 
 func finishCurLevel():
+	print("Done with level")
 	despawnAllBeans()
 	curLevelIndex += 1
 	refreshCurLevelVars()
@@ -154,25 +169,34 @@ func refreshCurLevelVars():
 	curLevelDuration = levelDurations[curLevelIndex]
 	levelStopwatch = 0.0
 	freePaths = [0,1,2]
-	print("paths reset")
+	#print("paths reset")
 
 func getRandomTime(beanType):
 	var beanTimes = beanSpeedJson[beanType]
 	return randf_range(beanTimes["min"], beanTimes["max"])
 
 func switch_path_locked(beanPath, destroyed):
-	print("beanPath: ", beanPath)
-	print("freePaths1: ", freePaths)
+	#print("beanPath: ", beanPath)
+	#print("freePaths1: ", freePaths)
 	for i in freePaths.size():
 		if freePaths[i] == beanPath:
-			print("here")
+			#print("here")
 			freePaths.remove_at(i)
 			break
 	if destroyed:
 		freePaths.append(beanPath)
-	print("freePaths2: ", freePaths)
+	#print("freePaths2: ", freePaths)
 
 func _on_bean_created_signal(beanInstance):
 	var beanPathNum = beanInstance.get_bean_path_num()
 	switch_path_locked(beanPathNum, false)
-	print("bean path: ", beanPathNum)
+	#print("bean path: ", beanPathNum)
+
+func get_random_boss_phrases():
+	var random_phrases = bossPhrasesJson.duplicate()
+	random_phrases.shuffle()
+	var to_use = []
+	for i in 3:
+		to_use.append(random_phrases[0])
+		random_phrases.pop_front()
+	return to_use

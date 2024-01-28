@@ -22,4 +22,8 @@ autostart = true
 [node name="PromptHandler" parent="." instance=ExtResource("3_ugu4j")]
 position = Vector2(-256, 256)
 
+[node name="BossAttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="timeout" from="MovementControl/MovementTimer" to="MovementControl" method="_on_movement_timer_timeout"]
+[connection signal="timeout" from="BossAttackTimer" to="." method="_on_boss_attack_timer_timeout"]
