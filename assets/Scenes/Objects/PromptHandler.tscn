@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://assets/Scripts/PromptHandler.gd" id="1_4k6ch"]
 [ext_resource type="FontFile" uid="uid://cdqmmdur0ivl1" path="res://assets/Fonts/Halogen.ttf" id="2_55mn4"]
-[ext_resource type="PackedScene" uid="uid://cootp5gqxpkud" path="res://assets/Scenes/Objects/wrong_audio_player.tscn" id="3_xf555"]
-[ext_resource type="PackedScene" uid="uid://cs7sib4r7irwo" path="res://assets/Scenes/Objects/key_audio_player.tscn" id="4_cmhwb"]
+[ext_resource type="PackedScene" path="res://assets/Scenes/Objects/wrong_audio_player.tscn" id="3_xf555"]
+[ext_resource type="PackedScene" path="res://assets/Scenes/Objects/key_audio_player.tscn" id="4_cmhwb"]
 
 [node name="PromptHandler" type="Node2D"]
 script = ExtResource("1_4k6ch")

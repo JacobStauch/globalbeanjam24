@@ -32,7 +32,7 @@ extends Node2D
 @onready var curLevel = levels[curLevelIndex]
 
 #Create level timer vars
-@onready var levelDurations = [4, 4, 30]
+@onready var levelDurations = [40, 40, 30]
 @onready var curLevelDuration = 0
 @onready var levelStopwatch := 0.0
 
