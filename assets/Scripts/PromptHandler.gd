@@ -71,6 +71,8 @@ func convertPromptTextToArray(prompt: String):
 				promptArray.append("Minus")
 			"'":
 				promptArray.append("Apostrophe")
+			"?":
+				promptArray.append("Question")
 			_:
 				promptArray.append(char)
 	#print("Prompt array: ", promptArray)
@@ -81,6 +83,7 @@ func checkChar(letter: String):
 		# Correct letter
 		# print("check char")
 		charsTyped += 1
+		print("letter ", letter)
 		if (letter == promptArray.front()):
 			signalBus.beanSelectedSignal.emit(get_parent())
 			promptArray.pop_front()
