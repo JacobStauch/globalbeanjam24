@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cia08ep4p0qos"]
+[gd_scene load_steps=10 format=3 uid="uid://cia08ep4p0qos"]
 
 [ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="1_ogd56"]
 [ext_resource type="Texture2D" uid="uid://sgf58l0e8mjr" path="res://assets/Graphics/KingdomBackground.png" id="5_8ay31"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="5_nj5dg"]
 [ext_resource type="PackedScene" uid="uid://deae7rohl6cai" path="res://assets/Scenes/Objects/EndMenu.tscn" id="6_bnlr7"]
 [ext_resource type="Script" path="res://assets/Scenes/TestLevels/Camera2D.gd" id="6_boq6w"]
+[ext_resource type="AudioStream" uid="uid://dfcsuyghx260x" path="res://assets/Music/dance_song.mp3" id="7_0vsia"]
+[ext_resource type="AudioStream" uid="uid://dgurkcwgminjf" path="res://assets/Sounds/clop.wav" id="8_64d8s"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lwnts"]
 texture = ExtResource("5_8ay31")
@@ -14,6 +16,10 @@ texture = ExtResource("5_8ay31")
 metadata/_edit_lock_ = true
 
 [node name="GameManager" parent="." instance=ExtResource("5_nj5dg")]
+
+[node name="SoundEffects" type="AudioStreamPlayer2D" parent="GameManager"]
+stream = ExtResource("8_64d8s")
+volume_db = 17.0
 
 [node name="PathManager" type="Node2D" parent="." groups=["BenTest_Managers", "PathManagers"]]
 script = ExtResource("1_ogd56")
@@ -38,3 +44,8 @@ visible = false
 unique_name_in_owner = true
 anchor_mode = 0
 script = ExtResource("6_boq6w")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_0vsia")
+volume_db = 12.0
+autoplay = true

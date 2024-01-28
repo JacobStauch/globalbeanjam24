@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://rhf8cp412wby"]
+[gd_scene load_steps=9 format=3 uid="uid://c33cy0ygq5mre"]
 
 [ext_resource type="Script" path="res://assets/Scripts/Menu.gd" id="1_jm8o4"]
 [ext_resource type="FontFile" uid="uid://cgssqwfr30ip2" path="res://assets/Fonts/Duckname.ttf" id="2_511yp"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://dlo0hs2msvoy8" path="res://assets/Fonts/Heyhoo.ttf" id="4_to55l"]
 [ext_resource type="Texture2D" uid="uid://t1jndj55thug" path="res://assets/Graphics/bean.png" id="5_k4s2i"]
 [ext_resource type="Texture2D" uid="uid://0cpr0fe0r4b0" path="res://assets/Graphics/blackeyedpea.png" id="6_yjk81"]
+[ext_resource type="AudioStream" uid="uid://dfcsuyghx260x" path="res://assets/Music/dance_song.mp3" id="7_ts4hs"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0q86d"]
 texture = ExtResource("3_dm6u1")
@@ -76,6 +77,11 @@ texture = ExtResource("5_k4s2i")
 position = Vector2(216, 352)
 scale = Vector2(0.11194, 0.11194)
 texture = ExtResource("6_yjk81")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_ts4hs")
+volume_db = 13.0
+autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
