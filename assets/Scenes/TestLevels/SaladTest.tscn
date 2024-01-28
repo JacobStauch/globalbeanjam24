@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cia08ep4p0qos"]
 
 [ext_resource type="Script" path="res://assets/Scripts/PathManager.gd" id="1_ogd56"]
-[ext_resource type="Texture2D" uid="uid://bavec3j6mmrv5" path="res://assets/Graphics/Castle.png" id="3_661ki"]
+[ext_resource type="Texture2D" uid="uid://eev46k5pj7pq" path="res://assets/Graphics/Castle.png" id="3_661ki"]
 [ext_resource type="PackedScene" uid="uid://bju3ia3r8w6o" path="res://assets/Scenes/Objects/PauseMenu.tscn" id="5_g2o1u"]
 [ext_resource type="PackedScene" uid="uid://c183b2qk4j33c" path="res://assets/Scenes/Objects/GameManager.tscn" id="5_nj5dg"]
 [ext_resource type="PackedScene" uid="uid://deae7rohl6cai" path="res://assets/Scenes/Objects/EndMenu.tscn" id="6_bnlr7"]

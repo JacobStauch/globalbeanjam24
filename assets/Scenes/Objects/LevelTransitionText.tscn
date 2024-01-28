@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvdhxf7dwcouw"]
+
+[ext_resource type="FontFile" uid="uid://dmhwtthyptvqi" path="res://assets/Fonts/Momcake-Bold.otf" id="1_cwvdl"]
+[ext_resource type="Script" path="res://assets/Scripts/LevelTransitionText.gd" id="2_lvp2l"]
+
+[node name="LevelTransitionText" type="Node2D"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_top = -196.0
+offset_right = 1929.0
+offset_bottom = 243.0
+theme_override_colors/font_outline_color = Color(0, 0.156863, 0.133333, 1)
+theme_override_constants/outline_size = 50
+theme_override_fonts/normal_font = ExtResource("1_cwvdl")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "[center]Level 1: Bean Kingdom[/center]"
+script = ExtResource("2_lvp2l")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

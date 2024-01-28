@@ -95,7 +95,7 @@ animations = [{
 "texture": ExtResource("14_mm74l")
 }],
 "loop": true,
-"name": &"navy_bean_anim",
+"name": &"navy_beans_anim",
 "speed": 3.0
 }]
 
@@ -104,8 +104,7 @@ script = ExtResource("1_ekw5c")
 
 [node name="BasicBeanSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6trg7")
-animation = &"green_beans_anim"
-autoplay = "basic_bean_anim"
+animation = &"navy_beans_anim"
 speed_scale = 0.4
 
 [node name="MovementControl" type="Node2D" parent="."]

@@ -6,19 +6,23 @@ extends Node2D
 @onready var beanObjectScene: PackedScene = preload("res://assets/Scenes/Objects/BasicBean.tscn")
 @onready var beanHudScene: PackedScene = preload("res://assets/Scenes/Objects/HealthBeans.tscn")
 @onready var beanDialogueBoxScene: PackedScene = preload("res://assets/Scenes/Objects/DialogueBox.tscn")
-
+@onready var levelTransitionScene: PackedScene = preload("res://assets/Scenes/Objects/LevelTransitionText.tscn")
 #Preload JSON files
 @onready var beanLevelJsonFile = FileAccess.open("res://assets/Text/level_beans.json", FileAccess.READ)
 @onready var beanPhraseJsonFile = FileAccess.open("res://assets/Text/bean_phrases.json", FileAccess.READ)
 @onready var beanSpriteJsonFile = FileAccess.open("res://assets/Text/bean_sprites.json", FileAccess.READ)
 @onready var beanSpeedJsonFile = FileAccess.open("res://assets/Text/bean_speeds.json", FileAccess.READ)
 @onready var bossPhrasesJsonFile = FileAccess.open("res://assets/Text/boss_phrases.json", FileAccess.READ)
+@onready var levelSpritesJsonFile = FileAccess.open("res://assets/Text/level_sprites.json", FileAccess.READ)
+@onready var levelNamesJsonFile = FileAccess.open("res://assets/Text/level_names.json", FileAccess.READ)
 # Create parsed JSON vars
 @onready var beanLevelJson: Dictionary = JSON.parse_string(beanLevelJsonFile.get_as_text())
 @onready var beanPhraseJson: Dictionary = JSON.parse_string(beanPhraseJsonFile.get_as_text())
 @onready var beanSpriteJson: Dictionary = JSON.parse_string(beanSpriteJsonFile.get_as_text())
 @onready var beanSpeedJson: Dictionary = JSON.parse_string(beanSpeedJsonFile.get_as_text())
 @onready var bossPhrasesJson: Array = JSON.parse_string(bossPhrasesJsonFile.get_as_text())
+@onready var levelSpritesJson: Dictionary = JSON.parse_string(levelSpritesJsonFile.get_as_text())
+@onready var levelNamesJson: Dictionary = JSON.parse_string(levelNamesJsonFile.get_as_text())
 
 # Initialize HUD reference
 @onready var healthHUD
@@ -40,6 +44,9 @@ extends Node2D
 
 # Get reference to Camera node
 @onready var camera = get_viewport().get_camera_2d()
+
+# Get reference to Background node
+@onready var bg: Panel = get_node("../Background")
 
 # Create Game Manager signals
 signal new_bean_created
@@ -66,6 +73,7 @@ func _ready():
 	signalBus.dialogueBoxFinishedSignal.connect(_on_dialogue_box_finished)
 	signalBus.beanAtEndSignal.connect(_on_hit)
 	signalBus.beanCreatedSignal.connect(_on_bean_created_signal)
+	signalBus.levelTransitionFinished.connect(_on_level_transition_finished)
 	# Create BeanContainer child node to hold all the Bean objects
 	var beanContainerNode = Node2D.new()
 	beanContainerNode.name = "BeanContainer"
@@ -93,9 +101,10 @@ func _on_dialogue_box_finished(currentState):
 	print("Game Manager acknowledges dialogue box finished")
 	print("Dialogue state finished: ", currentState)
 	$DialogueBoxContainer.queue_free()
+
 	if currentState in levels or currentState == "start":
 		healthHUD.show()
-		startCurLevel()
+		doLevelTransition()
 	else:
 		var endMenu = get_node("../EndMenu")
 		var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
@@ -141,6 +150,10 @@ func _on_bean_created_signal(beanInstance):
 	var beanPathNum = beanInstance.get_bean_path_num()
 	switch_path_locked(beanPathNum, false)
 	print("bean path: ", beanPathNum)
+	
+func _on_level_transition_finished():
+	print("Received level transition finished signal, starting level")
+	startCurLevel()
 
 func updateCharsTyped(beanInstance):
 	var promptHandler = beanInstance.get_node("PromptHandler")
@@ -187,13 +200,15 @@ func despawnAllBeans():
 		c.queue_free()
 
 func startCurLevel():
-	var isLastLevel = curLevelIndex == len(levels) - 1
 	levelInProgress = true
 	curLevelDuration = levelDurations[curLevelIndex]
 	maxBeanCount = curLevelIndex + 1
 	var randomBeanCount = randi_range(1,maxBeanCount)
+	
+	var isLastLevel = curLevelIndex == len(levels) - 1
 	if isLastLevel: # Force there to only be one bean in the last level (the boss bean)
 		randomBeanCount = 1
+		
 	#print(randomBeanCount)
 	for i in randomBeanCount:
 		if freePaths.size() > 0:
@@ -213,7 +228,6 @@ func finishCurLevel():
 		startLevelDialogue(levels[curLevelIndex])
 		refreshCurLevelVars()
 		levelInProgress = false
-		# immediately start next level for testing purposes
 	
 func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
@@ -269,5 +283,16 @@ func finishGameBadEnd():
 	startDialogue("ending_bad")
 	
 func startLevelDialogue(currentLevel: String):
+	healthHUD.hide()
 	startDialogue(currentLevel)
 	
+func doLevelTransition():
+	var curLevelBgImage = Image.load_from_file(levelSpritesJson[curLevel])
+	var curLevelBgTexture = ImageTexture.create_from_image(curLevelBgImage)
+	bg.get_theme_stylebox("panel").texture = curLevelBgTexture
+	
+	var levelTransitionTextObject = levelTransitionScene.instantiate()
+	var levelTransitionTextLabel = levelTransitionTextObject.get_node("RichTextLabel")
+	levelTransitionTextLabel.text = "[center]" + levelNamesJson[curLevel] + "[/center]"
+	
+	add_child(levelTransitionTextObject)
