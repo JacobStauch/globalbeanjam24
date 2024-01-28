@@ -158,8 +158,9 @@ func createBean(level: String, isLastLevel: bool = false):
 	var beanObject = beanObjectScene.instantiate() as BeanScript
 	beanObject.isBoss = isLastLevel
 	
-	var beanSprite: Sprite2D = beanObject.get_node("BasicBeanSprite")
-	beanSprite.texture = load(beanSpriteJson[randomBeanTypeFromLevel])
+	var beanSprite: AnimatedSprite2D = beanObject.get_node("BasicBeanSprite")
+	beanSprite.set_animation(beanSpriteJson[randomBeanTypeFromLevel])
+	beanSprite.play()
 	
 	var beanPromptHandler = beanObject.get_node("PromptHandler") as PromptHandler
 	
