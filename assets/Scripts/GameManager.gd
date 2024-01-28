@@ -32,7 +32,7 @@ extends Node2D
 @onready var curLevel = levels[curLevelIndex]
 
 #Create level timer vars
-@onready var levelDurations = [4, 4, 30]
+@onready var levelDurations = [40, 40, 30]
 @onready var curLevelDuration = 0
 @onready var levelStopwatch := 0.0
 
@@ -298,9 +298,7 @@ func startLevelDialogue(currentLevel: String):
 	startDialogue(currentLevel)
 	
 func doLevelTransition():
-	var curLevelBgImage = Image.load_from_file(levelSpritesJson[curLevel])
-	var curLevelBgTexture = ImageTexture.create_from_image(curLevelBgImage)
-	bg.get_theme_stylebox("panel").texture = curLevelBgTexture
+	bg.get_theme_stylebox("panel").texture = load(levelSpritesJson[curLevel])
 	
 	var levelTransitionTextObject = levelTransitionScene.instantiate()
 	var levelTransitionTextLabel = levelTransitionTextObject.get_node("RichTextLabel")
