@@ -32,7 +32,7 @@ extends Node2D
 @onready var curLevel = levels[curLevelIndex]
 
 #Create level timer vars
-@onready var levelDurations = [40, 40, 30]
+@onready var levelDurations = [4, 4, 30]
 @onready var curLevelDuration = 0
 @onready var levelStopwatch := 0.0
 
@@ -47,6 +47,9 @@ extends Node2D
 
 # Get reference to Background node
 @onready var bg: Panel = get_node("../Background")
+
+# Get reference to audio player
+@onready var music: AudioStreamPlayer2D = get_node("../BackgroundMusic")
 
 # Create Game Manager signals
 signal new_bean_created
@@ -106,6 +109,9 @@ func _on_dialogue_box_finished(currentState):
 		healthHUD.show()
 		doLevelTransition()
 	else:
+		music.stream = load("res://assets/Music/stats.mp3")
+		music.play()
+		
 		var endMenu = get_node("../EndMenu")
 		var panel = endMenu.get_node("CenterContainer/BackgroundPanel")
 		var wpm = (totalCharsTyped - totalErrorsTyped)/((totalTimeInSeconds/60) * 5)
@@ -209,6 +215,8 @@ func startCurLevel():
 	
 	var isLastLevel = curLevelIndex == len(levels) - 1
 	if isLastLevel: # Force there to only be one bean in the last level (the boss bean)
+		music.stream = load("res://assets/Music/boss.mp3")
+		music.play()
 		randomBeanCount = 1
 		
 	#print(randomBeanCount)
