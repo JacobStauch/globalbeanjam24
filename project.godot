@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Global Bean Jam"
+config/name="Typing of the Beans"
 run/main_scene="res://assets/Scenes/Objects/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/Graphics/Icon.png"
