@@ -171,37 +171,38 @@ func updateCharsTyped(beanInstance):
 	totalErrorsTyped += errorsTyped
 
 func createBean(level: String, isLastLevel: bool = false):
-	var numBeanTypesInLevel = beanLevelJson[level].size()-1
-	var randomBeanTypeFromLevel = beanLevelJson[level][randi_range(0,numBeanTypesInLevel)]
-	
-	var numPhrasesForBeanType = beanPhraseJson[randomBeanTypeFromLevel].size()-1
-	var randomBeanPhrase = beanPhraseJson[randomBeanTypeFromLevel][randi_range(0,numPhrasesForBeanType)]
-	
-	var beanObject = beanObjectScene.instantiate() as BeanScript
-	beanObject.isBoss = isLastLevel
-	
-	var beanSprite: AnimatedSprite2D = beanObject.get_node("BasicBeanSprite")
-	beanSprite.set_animation(beanSpriteJson[randomBeanTypeFromLevel])
-	beanSprite.play()
-	
-	var beanPromptHandler = beanObject.get_node("PromptHandler") as PromptHandler
-	
-	if !isLastLevel:
-		beanPromptHandler.prompts = [randomBeanPhrase] as Array[String]
-	else:
-		beanPromptHandler.prompts = bossPhrasesUsed
-	
-	var beanMovementScript = beanObject.get_node("MovementControl")
-	var randomPathIndex = randi_range(0,freePaths.size()-1)
-	var randomPath = freePaths[randomPathIndex]
-	beanMovementScript.set_path(path_manager.get_random_path(curLevel+str(randomPath)), randomPath)
-	
-	var beanMovementTimer = beanMovementScript.get_node("MovementTimer") as Timer
-	beanMovementTimer.wait_time = getRandomTime(randomBeanTypeFromLevel)
-	
-	$BeanContainer.add_child(beanObject)
-	emit_signal("new_bean_created")
-	SignalBus.beanCreatedSignal.emit(beanObject)
+	if (levelInProgress):
+		var numBeanTypesInLevel = beanLevelJson[level].size()-1
+		var randomBeanTypeFromLevel = beanLevelJson[level][randi_range(0,numBeanTypesInLevel)]
+		
+		var numPhrasesForBeanType = beanPhraseJson[randomBeanTypeFromLevel].size()-1
+		var randomBeanPhrase = beanPhraseJson[randomBeanTypeFromLevel][randi_range(0,numPhrasesForBeanType)]
+		
+		var beanObject = beanObjectScene.instantiate() as BeanScript
+		beanObject.isBoss = isLastLevel
+		
+		var beanSprite: AnimatedSprite2D = beanObject.get_node("BasicBeanSprite")
+		beanSprite.set_animation(beanSpriteJson[randomBeanTypeFromLevel])
+		beanSprite.play()
+		
+		var beanPromptHandler = beanObject.get_node("PromptHandler") as PromptHandler
+		
+		if !isLastLevel:
+			beanPromptHandler.prompts = [randomBeanPhrase] as Array[String]
+		else:
+			beanPromptHandler.prompts = bossPhrasesUsed
+		
+		var beanMovementScript = beanObject.get_node("MovementControl")
+		var randomPathIndex = randi_range(0,freePaths.size()-1)
+		var randomPath = freePaths[randomPathIndex]
+		beanMovementScript.set_path(path_manager.get_random_path(curLevel+str(randomPath)), randomPath)
+		
+		var beanMovementTimer = beanMovementScript.get_node("MovementTimer") as Timer
+		beanMovementTimer.wait_time = getRandomTime(randomBeanTypeFromLevel)
+		
+		$BeanContainer.add_child(beanObject)
+		emit_signal("new_bean_created")
+		SignalBus.beanCreatedSignal.emit(beanObject)
 	
 func despawnAllBeans():
 	for c in $BeanContainer.get_children():
@@ -226,6 +227,7 @@ func startCurLevel():
 		await get_tree().create_timer(1.5).timeout
 
 func finishCurLevel():
+	levelInProgress = false
 	print("Done with level")
 	despawnAllBeans()
 	curLevelIndex += 1
@@ -238,7 +240,6 @@ func finishCurLevel():
 	else:
 		startLevelDialogue(levels[curLevelIndex])
 		refreshCurLevelVars()
-		levelInProgress = false
 	
 func refreshCurLevelVars():
 	curLevel = levels[curLevelIndex]
