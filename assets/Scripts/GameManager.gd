@@ -286,12 +286,10 @@ func startDialogue(state: String):
 
 func finishGameGoodEnd():
 	healthHUD.hide()
-	levelInProgress = false
 	startDialogue("ending_good")
 	
 func finishGameBadEnd():
 	despawnAllBeans()
-	levelInProgress = false
 	startDialogue("ending_bad")
 	
 func startLevelDialogue(currentLevel: String):
